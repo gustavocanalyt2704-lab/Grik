@@ -8,7 +8,15 @@ export function RegistryPage() {
   const [module, setModule] = useState('')
   const q = useQuery({ queryKey: ['registry'], queryFn: api.registry })
 
-  if (q.isLoading) return <p className="text-[var(--color-mist)]">Carregando registro…</p>
+  if (q.isLoading) {
+    return (
+      <div className="space-y-3">
+        <div className="skeleton h-8 w-64" />
+        <div className="skeleton h-24 w-full" />
+        <div className="skeleton h-24 w-full" />
+      </div>
+    )
+  }
   if (q.isError) return <p className="text-[var(--color-danger)]">Erro ao carregar registro</p>
 
   const metrics = (q.data?.metrics || []).filter((m) => !module || m.module === module)
@@ -35,7 +43,7 @@ export function RegistryPage() {
         <button
           type="button"
           onClick={() => setModule('')}
-          className={`rounded border px-2 py-1 text-xs ${!module ? 'border-[var(--color-accent)] text-[var(--color-accent)]' : 'border-[var(--color-line)] text-[var(--color-mist)]'}`}
+          className={`min-h-9 rounded-full px-3 text-xs font-medium ${!module ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]' : 'border border-[var(--color-line)] bg-[var(--color-panel)] text-[var(--color-ink)]'}`}
         >
           Todos
         </button>
@@ -44,7 +52,7 @@ export function RegistryPage() {
             key={m}
             type="button"
             onClick={() => setModule(m)}
-            className={`rounded border px-2 py-1 text-xs ${module === m ? 'border-[var(--color-accent)] text-[var(--color-accent)]' : 'border-[var(--color-line)] text-[var(--color-mist)]'}`}
+            className={`min-h-9 rounded-full px-3 text-xs font-medium ${module === m ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]' : 'border border-[var(--color-line)] bg-[var(--color-panel)] text-[var(--color-ink)]'}`}
           >
             {m}
           </button>
@@ -52,7 +60,7 @@ export function RegistryPage() {
       </div>
       <div className="grid gap-3 md:hidden">
         {metrics.map((m) => (
-          <article key={m.id} className="rounded-2xl border border-[var(--color-line)] bg-white p-3">
+          <article key={m.id} className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-3">
             <p className="font-mono text-[11px] text-[var(--color-accent)]">{m.id}</p>
             <h3 className="mt-1 text-base font-semibold text-[var(--color-ink)]">{m.name}</h3>
             <p className="mt-1 text-sm leading-snug text-[var(--color-mist)]">{m.definition}</p>
@@ -68,7 +76,7 @@ export function RegistryPage() {
           </article>
         ))}
       </div>
-      <div className="hidden overflow-x-auto rounded-md border border-[var(--color-line)] md:block">
+      <div className="hidden overflow-x-auto rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] shadow-[var(--shadow)] md:block">
         <table className="w-full min-w-[900px] border-collapse text-left text-sm">
           <thead className="bg-[var(--color-panel)] text-[11px] uppercase tracking-wide text-[var(--color-mist)]">
             <tr>

@@ -78,7 +78,7 @@ export function SemRespostaPage() {
           sub="Cada barra é um motivo. A lista embaixo é a pessoa, só com o final do telefone."
           tipo="bar"
           categorias={causas.map(([motivo]) => motivo)}
-          series={[{ nome: 'Clientes', dados: causas.map(([, n]) => n), cor: '#9a3412' }]}
+          series={[{ nome: 'Clientes', dados: causas.map(([, n]) => n) }]}
         />
       )}
 
@@ -98,14 +98,14 @@ export function SemRespostaPage() {
             {causas.map(([motivo, n]) => (
               <article
                 key={motivo}
-                className="rounded-2xl border border-[var(--color-line)] bg-white px-4 py-3"
+                className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] px-4 py-3"
               >
                 <p className="text-[11px] uppercase tracking-wide text-[var(--color-mist)]">{motivo}</p>
                 <p className="font-display text-3xl text-[var(--color-ink)]">{n}</p>
               </article>
             ))}
           </section>
-          <div className="overflow-x-auto rounded-2xl border border-[var(--color-line)] bg-white">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)]">
             <table className="min-w-full text-left text-sm">
               <thead className="border-b border-[var(--color-line)] text-[var(--color-mist)]">
                 <tr>

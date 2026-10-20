@@ -37,7 +37,7 @@ export function MetricTooltip({
         <div
           id={`tip-${metricId}`}
           role="tooltip"
-          className="anim-rise absolute left-0 top-full z-40 mt-2 w-72 rounded-xl border border-[var(--color-line)] bg-white p-3 text-[var(--color-ink)] shadow-xl"
+          className="anim-rise absolute left-0 top-full z-40 mt-2 w-72 rounded-xl border border-[var(--color-line)] bg-[var(--color-panel)] p-3 text-[var(--color-ink)] shadow-xl"
         >
           {!metric ? (
             <p className="text-xs text-[var(--color-mist)]">Carregando registro…</p>

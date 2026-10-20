@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '@/lib/api'
+import { Lock } from 'lucide-react'
 
 export function LoginPage() {
   const nav = useNavigate()
@@ -31,16 +32,19 @@ export function LoginPage() {
     <div className="flex min-h-screen items-center justify-center px-4 py-10">
       <form
         onSubmit={onSubmit}
-        className="anim-rise w-full max-w-md rounded-3xl border border-[var(--color-line)] bg-white p-6 shadow-[0_20px_50px_rgba(28,25,23,0.08)] sm:p-8"
+        className="anim-rise w-full max-w-md rounded-3xl border border-[var(--color-line)] bg-[var(--color-panel)] p-6 shadow-[var(--shadow)] sm:p-8"
       >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
+        <div className="grid h-11 w-11 place-items-center rounded-2xl bg-[var(--color-accent)] text-sm font-semibold text-[var(--color-on-accent)]">
+          MN
+        </div>
+        <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-mist)]">
           MN Tecnologia
         </p>
-        <h1 className="font-display mt-2 text-4xl font-semibold text-[var(--color-ink)]">Entrar</h1>
+        <h1 className="font-display mt-1 text-3xl font-semibold text-[var(--color-ink)]">Entrar</h1>
         <p className="mt-2 text-sm leading-relaxed text-[var(--color-mist)]">
-          Mesma senha do painel atual, neste login. O painel antigo continua no ar.
+          Mesma senha do painel da raiz. O painel antigo continua no ar.
         </p>
-        <label className="mt-6 mb-3 block text-xs font-medium uppercase tracking-wide text-[var(--color-mist)]">
+        <label className="mt-6 mb-3 block text-[12px] font-medium text-[var(--color-mist)]">
           Usuário
           <input
             value={username}
@@ -49,7 +53,7 @@ export function LoginPage() {
             autoComplete="username"
           />
         </label>
-        <label className="mb-4 block text-xs font-medium uppercase tracking-wide text-[var(--color-mist)]">
+        <label className="mb-4 block text-[12px] font-medium text-[var(--color-mist)]">
           Senha
           <input
             type="password"
@@ -63,8 +67,9 @@ export function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-xl bg-[var(--color-accent)] px-4 py-3 text-sm font-semibold text-[var(--color-on-accent)] transition hover:brightness-110 disabled:opacity-60"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-4 py-3 text-sm font-semibold text-[var(--color-on-accent)] transition hover:brightness-110 disabled:opacity-60"
         >
+          <Lock size={16} />
           {loading ? 'Entrando…' : 'Entrar'}
         </button>
       </form>

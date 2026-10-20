@@ -51,7 +51,7 @@ export function GlobalFiltersBar() {
     !!filters.aparelho
 
   return (
-    <div className="anim-rise flex flex-wrap items-end gap-3 rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/60 p-3 backdrop-blur">
+    <div className="anim-rise flex flex-wrap items-end gap-3 rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-3 shadow-[var(--shadow)]">
       <label className="flex min-w-[140px] flex-col gap-1 text-[11px] uppercase tracking-wide text-[var(--color-mist)]">
         Período
         <select

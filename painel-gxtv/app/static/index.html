@@ -7,7 +7,7 @@
 <title>Painel GXTV</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect rx='8' width='32' height='32' fill='%2322d3ee'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='13' font-family='sans-serif' font-weight='700' fill='%2304141c'%3EGX%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/static/app.css?v=dark1">
-<link rel="stylesheet" href="/static/tema.css?v=gx2">
+<script>try{document.documentElement.dataset.tema=localStorage.getItem("gx_tema")||"escuro"}catch(e){document.documentElement.dataset.tema="escuro"}</script>
 </head>
 <body class="booting">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -52,29 +52,36 @@
 </div>
 
 <div id="app" hidden>
+  <aside class="side">
+    <div class="brand"><div class="brand-logo">GX</div><div>GXTV<small>MN Tech</small></div></div>
+    <nav class="chips" aria-label="Telas">
+      <button class="chip on" type="button" data-vista="inicio"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg><span>Visão geral</span></button>
+      <button class="chip" type="button" data-vista="vendas-nr"><svg class="nav-ico" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>Vendas</span></button>
+      <button class="chip" type="button" data-vista="vendas"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M4 4h16l-6 7v7l-4 2v-9z"/></svg><span>Funil</span></button>
+      <button class="chip" type="button" data-vista="mensagens"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M5 6h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-4 3v-3H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg><span>Mensagens</span></button>
+      <button class="chip" type="button" data-vista="saude"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg><span>Saúde</span></button>
+      <button class="chip" type="button" data-vista="ranking-apps"><svg class="nav-ico" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg><span>Apps</span></button>
+      <button class="chip" type="button" data-vista="ativos"><svg class="nav-ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 19a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.2"/><path d="M16 19a5 5 0 0 1 5-4"/></svg><span>Ativos reais</span></button>
+      <button class="chip" type="button" data-vista="acoes"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M14.5 4.5 19.5 9.5 8 21H3v-5z"/><path d="M12.5 6.5l5 5"/></svg><span>Ações</span></button>
+    </nav>
+    <div class="side-foot">
+      <button class="chip tema" type="button" id="btnTema"><svg class="nav-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg><span id="temaTxt">Tema claro</span></button>
+      <button class="chip" type="button" id="btnSair"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M10 7V5a2 2 0 0 1 2-2h7v18h-7a2 2 0 0 1-2-2v-2"/><path d="M4 12h11M12 8l4 4-4 4"/></svg><span>Sair</span></button>
+    </div>
+  </aside>
+  <div class="shell">
   <header class="topbar">
     <div class="local-banner" id="localBanner" hidden>Pré-visualização neste computador. Na VPS os números vêm dos dados reais.</div>
     <div class="demo-banner" id="demoBanner" hidden>Demonstração. Estes números são um exemplo para ver o painel. Na VPS entram os dados de verdade.</div>
     <div class="stale-banner" id="staleBanner"><svg class="i"><use href="#i-alert"/></svg><span>Sem conexão com o servidor. Mostrando os últimos dados recebidos.</span></div>
     <div class="top-row">
-      <div class="brand"><div class="brand-logo">GX</div><div>GXTV<small>Painel ao vivo</small></div></div>
-      <nav class="chips" aria-label="Telas">
-        <!-- PAINEL_1110: abas enxutas -->
-        <button class="chip on" type="button" data-vista="inicio">Visão geral</button>
-        <button class="chip" type="button" data-vista="vendas-nr">Vendas</button>
-        <button class="chip" type="button" data-vista="vendas">Funil</button>
-        <button class="chip" type="button" data-vista="mensagens">Mensagens</button>
-        <button class="chip" type="button" data-vista="saude">Saúde</button>
-        <button class="chip" type="button" data-vista="ranking-apps">Apps</button>
-        <button class="chip" type="button" data-vista="ativos">Ativos reais</button>
-        <button class="chip" type="button" data-vista="acoes">Ações</button>
-      </nav>
-      <div class="spacer"></div>
       <div class="live" id="live"><span class="dot"></span><span id="liveTxt">AO VIVO</span><span class="mini num" id="clock">--:--:--</span></div>
+      <div class="spacer"></div>
+      <button class="icon-btn so-mobile" id="btnTemaMobile" type="button" aria-label="Trocar tema"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg></button>
+      <button class="icon-btn so-mobile" id="btnSairMobile" type="button" aria-label="Sair"><svg class="i" viewBox="0 0 24 24"><path d="M10 7V5a2 2 0 0 1 2-2h7v18h-7a2 2 0 0 1-2-2v-2"/><path d="M4 12h11M12 8l4 4-4 4"/></svg></button>
       <div class="p11-sino-w"><button class="icon-btn" id="btnSino" type="button" aria-label="Alertas"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span id="p11Badge" hidden>0</span></button>
         <div id="p11Sino" hidden><h4>Alertas das últimas 24 h</h4><div id="p11SinoLista"></div></div></div>
       <button class="icon-btn" id="btnTv" type="button" aria-label="Modo TV"><svg class="i"><use href="#i-tv"/></svg></button>
-      <button class="icon-btn" id="btnSair" type="button" aria-label="Sair"><svg class="i"><use href="#i-lock"/></svg></button>
     </div>
   </header>
 
@@ -258,6 +265,7 @@
       </div>
     </section>
   </main>
+  </div>
 </div>
 
 <div id="gaveta" hidden>
@@ -284,12 +292,14 @@
 <script src="/static/atendidos.js?v=1410"></script>
 <script src="/static/por_conta.js?v=1810"></script>
 <link rel="stylesheet" href="/static/painel_1110.css?v=dark1">
-<script src="/static/painel_1110.js?v=gx3"></script>
+<script src="/static/painel_1110.js?v=gx4"></script>
 <link rel="stylesheet" href="/static/ativos.css?v=v2_1910">
+<link rel="stylesheet" href="/static/tema.css?v=gx4">
 <script src="/static/ativos.js?v=v2_1910"></script>
-<script src="/static/app.js?v=1110p"></script>
+<script src="/static/app.js?v=gx4"></script>
 <script src="/static/acoes.js"></script>
-<script src="/static/graficos.js?v=gx2"></script>
+<script src="/static/echarts.min.js?v=gx4"></script>
+<script src="/static/graficos.js?v=gx4"></script>
 <div id="p11Toasts"></div>
 </body>
 </html>

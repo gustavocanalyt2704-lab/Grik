@@ -9,6 +9,7 @@ import { LiveLog } from '@/components/LiveLog'
 import { DrilldownPanel } from '@/components/DrilldownPanel'
 import { GestorBanner } from '@/components/GestorBanner'
 import { LiveChart, type Graficos } from '@/components/LiveChart'
+import { Inbox } from 'lucide-react'
 import type { CampoNumero, GrupoNumeros, NumeroCard, ResumoLateral } from '@/lib/api'
 
 const PERIODOS = [
@@ -58,7 +59,7 @@ function NumeroLinha({ card, max }: { card: NumeroCard; max: number }) {
 function GrupoLista({ grupo }: { grupo: GrupoNumeros }) {
   const max = Math.max(...grupo.cards.map((c) => c.conversas.valor ?? 0), 1)
   return (
-    <section className="rounded-2xl border border-[var(--color-line)] bg-white px-3 py-2">
+    <section className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] px-3 py-2">
       <header className="flex items-baseline justify-between gap-2 border-b border-[var(--color-line)] py-2">
         <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)]">
           {grupo.titulo}
@@ -75,7 +76,7 @@ function GrupoLista({ grupo }: { grupo: GrupoNumeros }) {
 function ResumoCard({ titulo, sub, cell }: { titulo: string; sub: string; cell?: CampoNumero }) {
   const vazio = !cell || cell.rotulo === 'sem dado'
   return (
-    <article className="rounded-2xl border border-[var(--color-line)] bg-white px-3 py-3">
+    <article className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] px-3 py-3">
       <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--color-mist)]">{titulo}</p>
       <p className={vazio ? 'mt-1 text-sm text-[var(--color-mist)]' : 'mt-1 font-display text-2xl text-[var(--color-ink)]'}>
         {vazio ? 'sem dado' : cell.rotulo}
@@ -161,7 +162,7 @@ export function HomePage() {
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
           {hoje}
         </p>
-        <h2 className="font-display text-3xl font-semibold text-[var(--color-ink)] md:text-4xl">{titulo}</h2>
+        <h2 className="font-display text-[28px] font-semibold text-[var(--color-ink)] md:text-[32px]">{titulo}</h2>
         <p className="mt-1 max-w-2xl text-sm leading-relaxed text-[var(--color-mist)]">
           Todos os WhatsApps que atenderam no período, do maior volume para o menor. A lista sai da
           fila do webhook, a mesma fonte do gráfico Por número de WhatsApp.
@@ -177,8 +178,8 @@ export function HomePage() {
                 onClick={() => setFilters({ periodo: p.id })}
                 className={
                   ativo
-                    ? 'min-h-11 rounded-full bg-[var(--color-accent)] px-4 text-sm font-medium text-[var(--color-on-accent)]'
-                    : 'min-h-11 rounded-full border border-[var(--color-line)] bg-white px-4 text-sm text-[var(--color-ink)]'
+                    ? 'min-h-10 rounded-full bg-[var(--color-accent)] px-4 text-sm font-medium text-[var(--color-on-accent)]'
+                    : 'min-h-10 rounded-full border border-[var(--color-line)] bg-[var(--color-panel)] px-4 text-sm text-[var(--color-ink)]'
                 }
               >
                 {p.label}
@@ -193,8 +194,12 @@ export function HomePage() {
       <section className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_17rem]">
         <div className="order-2 space-y-3 lg:order-1">
           {grupos.length === 0 ? (
-            <div className="rounded-2xl border border-[var(--color-line)] bg-white px-4 py-6 text-sm text-[var(--color-mist)]">
-              {data.numeros?.nota || 'Nenhum número neste período.'}
+            <div className="flex items-start gap-3 rounded-2xl border border-dashed border-[var(--color-line)] bg-[var(--color-panel)] px-4 py-6 text-sm text-[var(--color-mist)]">
+              <Inbox size={18} className="mt-0.5 shrink-0" />
+              <div>
+                <p className="font-medium text-[var(--color-ink)]">Nenhum WhatsApp nesta lista</p>
+                <p className="mt-1 leading-relaxed">{data.numeros?.nota || 'Sem a fila do webhook, a lista fica sem dado.'}</p>
+              </div>
             </div>
           ) : (
             grupos.map((grupo) => <GrupoLista key={grupo.id} grupo={grupo} />)
@@ -208,12 +213,13 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         <KpiTile
           title="Faturamento"
           metricId="inicio.faturamento"
           envelope={k.faturamento}
           unit="R$"
+          spark={graficos?.vendas_hora?.sem_dado ? null : graficos?.vendas_hora?.n}
           onDrill={() => setDrill('inicio.faturamento')}
           delay={0}
         />
@@ -267,8 +273,8 @@ export function HomePage() {
           sub="Última hora, lida da fila do webhook. O detalhe por WhatsApp continua na lista acima."
           categorias={graficos?.mensagens_min?.rotulos}
           series={[
-            { nome: 'Recebidas', dados: graficos?.mensagens_min?.recebidas || [], cor: '#0e7490', area: true },
-            { nome: 'Enviadas', dados: graficos?.mensagens_min?.enviadas || [], cor: '#0c6b58' },
+            { nome: 'Recebidas', dados: graficos?.mensagens_min?.recebidas || [], area: true },
+            { nome: 'Enviadas', dados: graficos?.mensagens_min?.enviadas || [] },
           ]}
           vazio={graficos?.mensagens_min?.motivo || graficos?.motivo || 'sem dado'}
         />
@@ -276,7 +282,7 @@ export function HomePage() {
           titulo="Envio do robô contra o teto"
           sub={`A linha vermelha é o teto de ${graficos?.envio?.teto || graficos?.cap_envio_min || 240} mensagens por minuto.`}
           categorias={graficos?.envio?.rotulos || []}
-          series={[{ nome: 'Enviadas / min', dados: graficos?.envio?.serie || [], cor: '#0c6b58', area: true }]}
+          series={[{ nome: 'Enviadas / min', dados: graficos?.envio?.serie || [], area: true }]}
           marca={graficos?.envio?.teto || 240}
           marcaNome="teto 240/min"
           vazio={graficos?.envio?.motivo || 'sem dado'}
@@ -286,7 +292,7 @@ export function HomePage() {
           sub={graficos?.ativos?.fonte || 'P3 está desligado. P1, P2, P4, P5 e P6 entram na conta. O número oficial mora na aba Ativos reais do painel da raiz.'}
           tipo="bar"
           categorias={(graficos?.ativos?.paineis || []).map((p) => p.id)}
-          series={[{ nome: 'Ativos', dados: (graficos?.ativos?.paineis || []).map((p) => p.n), cor: '#0c6b58' }]}
+          series={[{ nome: 'Ativos', dados: (graficos?.ativos?.paineis || []).map((p) => p.n) }]}
           vazio="sem dado — o v2 não consulta o Sigma. Abra Ativos reais no painel da raiz."
           className="lg:col-span-2"
         />
@@ -327,7 +333,7 @@ export function HomePage() {
         </div>
 
         <div className="lg:col-span-1">
-          <div className="rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/75 p-4">
+          <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]">
             <div className="mb-2 flex items-center justify-between">
               <h3 className="text-sm font-medium">
                 <MetricTooltip metricId="inicio.log_operacional">Log operacional</MetricTooltip>
@@ -374,7 +380,7 @@ export function HomePage() {
           </StateBlock>
 
           {espera && espera.lista?.length > 0 && (
-            <div className="rounded-md border border-[color-mix(in_oklab,var(--color-accent-2)_35%,transparent)] bg-[var(--color-panel)]/70 p-4">
+            <div className="rounded-2xl border border-[color-mix(in_oklab,var(--color-accent-2)_35%,transparent)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]">
               <h3 className="mb-2 text-sm font-medium text-[var(--color-accent-2)]">
                 Esperando agora ({espera.n})
               </h3>

@@ -20,7 +20,7 @@
     const txt = (d >= 0 ? "+" : "−") + (dinheiro ? brl0(Math.abs(d)) : int(Math.abs(d)));
     return `<span class="p11-d ${d >= 0 ? "bom" : "ruim"}">${txt}</span>`;
   }
-  const kpi = (rot, val, sub, cls) => `<div class="p11-kpi ${cls || ""}"><div class="p11-rot">${rot}</div><div class="p11-big num">${val}</div><div class="p11-sub">${sub || ""}</div></div>`;
+  const kpi = (rot, val, sub, cls, spark) => `<article class="p11-kpi ${cls || ""}"><div class="p11-kpi-head"><span class="p11-rot">${rot}</span><span class="p11-spark" ${spark ? `data-spark="${spark}"` : ""}></span></div><div class="p11-big num">${val}</div><div class="p11-sub">${sub || ""}</div></article>`;
 
   // ------------------------------------------------------------ alertas (sininho)
   const ICONE = { venda: "💰", parado: "⏳", erro: "⚠️" };
@@ -101,8 +101,8 @@
       const caidos = s.servicos.filter((x) => x.estado !== "active");
       const fi = s.fiscal || {};
       $("#p11GeralKpis").innerHTML =
-        kpi("Vendido hoje", brl0(r.reais), `${int(r.n)} pagamentos · ontem até agora ${brl0(o.reais)} ${delta(r.reais, o.reais, true)}`) +
-        kpi("Vendas novas", int(r.novas), `${brl0(r.novas_reais)} · ontem até agora ${int(o.novas)}`) +
+        kpi("Vendido hoje", brl0(r.reais), `${int(r.n)} pagamentos · ontem ${brl0(o.reais)} ${delta(r.reais, o.reais, true)}`, "", "vendas") +
+        kpi("Vendas novas", int(r.novas), `${brl0(r.novas_reais)} ${delta(r.novas, o.novas, false)}`, "", "novas") +
         kpi("Leads → pagaram", `${int(f.leads)} → ${int(f.pagou)}`, `${int(f.teste)} ganharam teste · conversão ${pct(f.pagou, f.leads)}`) +
         kpi("Comprovante parado", int(fi.parados_hoje), `alertas do vigia hoje · ${int(fi.manual_hoje)} foram pro manual`, fi.parados_hoje ? "atencao" : "") +
         kpi("Robô e fiscal", caidos.length ? `${caidos.length} fora` : "tudo de pé", caidos.length ? e(caidos.map((x) => x.rotulo).join(", ")) : `fiscal responde em ~${fi.fast_wh_mediana_s == null ? "—" : fi.fast_wh_mediana_s + " s"}`, caidos.length ? "ruim" : "bom") +

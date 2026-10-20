@@ -99,18 +99,23 @@ export function OperacaoPage() {
           title="Problemas hoje"
           metricId="operacao.problemas"
           envelope={data.problemas}
-          subtitle={p ? `Δ ontem ${p.delta_ontem >= 0 ? '+' : ''}${p.delta_ontem}` : null}
+          spark={(corr?.por_hora || []).map((h) => h.n)}
+          delta={p?.delta_ontem ?? null}
+          deltaHint="vs ontem"
+          deltaGood="down"
+          mostrarDelta
+          subtitle={p ? `ontem ${p.ontem} · média 7d ${p.media_7d}` : null}
           onDrill={() => setDrill('operacao.problemas')}
         />
-        <div className="rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/60 p-3">
+        <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]">
           <div className="text-xs text-[var(--color-mist)]">Ontem</div>
           <div className="font-display text-2xl">{p?.ontem ?? '—'}</div>
         </div>
-        <div className="rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/60 p-3">
+        <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]">
           <div className="text-xs text-[var(--color-mist)]">Média 7d</div>
           <div className="font-display text-2xl">{p?.media_7d ?? '—'}</div>
         </div>
-        <div className="rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/60 p-3">
+        <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]">
           <div className="text-xs text-[var(--color-mist)]">Δ vs média</div>
           <div className="font-display text-2xl">
             {p ? `${p.delta_media_7d >= 0 ? '+' : ''}${p.delta_media_7d}` : '—'}
@@ -123,7 +128,7 @@ export function OperacaoPage() {
           titulo="Problemas por hora"
           sub="Horário da Bahia. Sai das conversas do webhook, não de uma planilha nova."
           categorias={(corr?.por_hora || []).map((h) => `${h.hora}h`)}
-          series={[{ nome: 'Problemas', dados: (corr?.por_hora || []).map((h) => h.n), cor: '#9a3412', area: true }]}
+          series={[{ nome: 'Problemas', dados: (corr?.por_hora || []).map((h) => h.n), area: true }]}
           vazio="sem dado"
         />
         <LiveChart
@@ -131,13 +136,13 @@ export function OperacaoPage() {
           sub="Onde o cliente cita o aplicativo junto com o problema."
           tipo="bar"
           categorias={(corr?.por_app || []).map((a) => a.app)}
-          series={[{ nome: 'Casos', dados: (corr?.por_app || []).map((a) => a.n), cor: '#0c6b58' }]}
+          series={[{ nome: 'Casos', dados: (corr?.por_app || []).map((a) => a.n) }]}
           vazio="sem dado"
         />
       </section>
 
       {data.utra_lg ? (
-        <section className="anim-rise rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/60 p-4">
+        <section className="anim-rise rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">

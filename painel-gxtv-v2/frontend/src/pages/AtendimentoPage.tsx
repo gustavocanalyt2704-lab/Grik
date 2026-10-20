@@ -82,7 +82,7 @@ export function AtendimentoPage() {
           sub="Do contato novo até o resolvido. Toque no estágio abaixo para ver os nomes."
           tipo="bar"
           categorias={stages.map((s) => s.label)}
-          series={[{ nome: 'Conversas', dados: stages.map((s) => s.n), cor: '#0c6b58' }]}
+          series={[{ nome: 'Conversas', dados: stages.map((s) => s.n) }]}
           vazio={data.funil.message || 'sem dado'}
         />
         <StateBlock envelope={data.funil}>
@@ -95,7 +95,7 @@ export function AtendimentoPage() {
                   setStage(s.id)
                   setDrill('atendimento.funil')
                 }}
-                className="anim-rise rounded-md border border-[var(--color-line)] bg-[var(--color-ink)]/30 px-3 py-3 text-left hover:border-[var(--color-accent)]"
+                className="anim-rise rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] px-3 py-3 text-left shadow-[var(--shadow)] hover:border-[color-mix(in_oklab,var(--color-accent)_55%,transparent)]"
                 style={{ animationDelay: `${i * 40}ms` }}
               >
                 <div className="text-[11px] uppercase tracking-wide text-[var(--color-mist)]">{s.label}</div>
@@ -159,7 +159,7 @@ export function AtendimentoPage() {
       </section>
 
       <section className="grid gap-3 md:grid-cols-2">
-        <div className="rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/60 p-4">
+        <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]">
           <h3 className="mb-2 text-sm font-medium">Atual (período)</h3>
           <dl className="grid grid-cols-2 gap-2 font-mono text-xs text-[var(--color-mist)]">
             <div>média · {fmtSec(atual.media)}</div>
@@ -169,7 +169,7 @@ export function AtendimentoPage() {
             <div className="col-span-2">n gaps · {String(atual.n ?? '—')}</div>
           </dl>
         </div>
-        <div className="rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/60 p-4">
+        <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]">
           <h3 className="mb-2 text-sm font-medium">Histórico 7 dias</h3>
           <dl className="grid grid-cols-2 gap-2 font-mono text-xs text-[var(--color-mist)]">
             <div>média · {fmtSec(hist.media)}</div>

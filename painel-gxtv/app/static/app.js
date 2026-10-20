@@ -581,10 +581,13 @@ $("#formLogin").addEventListener("submit", async (ev) => {
     botao.textContent = "Entrar no painel";
   }
 });
-$("#btnSair").addEventListener("click", async () => {
+async function sair() {
   await fetch("/api/sair", { method: "POST" }).catch(() => null);
   voltarAoLogin("");
-});
+}
+$("#btnSair").addEventListener("click", sair);
+const btnSairMobile = document.getElementById("btnSairMobile");
+if (btnSairMobile) btnSairMobile.addEventListener("click", sair);
 $$("[data-vista]").forEach((b) => b.addEventListener("click", () => mostrar(b.dataset.vista)));
 $$("[data-msg]").forEach((b) => b.addEventListener("click", () => { subMsg = b.dataset.msg; try { localStorage.setItem("p11_msg", subMsg); } catch (e) { /* */ } mostrar("mensagens"); }));
 $$("[data-abre]").forEach((b) => b.addEventListener("click", () => abrir(b.dataset.abre)));
@@ -596,4 +599,19 @@ addEventListener("keydown", (e) => {
   if (e.key === "Escape") { fechar(); document.body.classList.remove("tv"); }
   if ((e.key === "t" || e.key === "T") && !e.target.matches("input")) document.body.classList.toggle("tv");
 });
+function aplicarTema(t) {
+  document.documentElement.dataset.tema = t === "claro" ? "claro" : "escuro";
+  const txt = document.getElementById("temaTxt");
+  if (txt) txt.textContent = document.documentElement.dataset.tema === "claro" ? "Tema escuro" : "Tema claro";
+  try { localStorage.setItem("gx_tema", document.documentElement.dataset.tema); } catch (e) { /* */ }
+  window.dispatchEvent(new Event("gx-tema"));
+}
+function alternarTema() {
+  aplicarTema(document.documentElement.dataset.tema === "claro" ? "escuro" : "claro");
+}
+const btnTema = document.getElementById("btnTema");
+if (btnTema) btnTema.addEventListener("click", alternarTema);
+const btnTemaMobile = document.getElementById("btnTemaMobile");
+if (btnTemaMobile) btnTemaMobile.addEventListener("click", alternarTema);
+aplicarTema(document.documentElement.dataset.tema || "escuro");
 boot();

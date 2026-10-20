@@ -84,6 +84,7 @@ export function RoboPage() {
           title={data.envios.value?.label_claro || 'Envios do robô'}
           metricId="robo.envios"
           envelope={data.envios}
+          spark={data.graficos?.envio?.serie}
           onDrill={() => setDrill('robo.envios')}
           delay={80}
         />
@@ -103,7 +104,7 @@ export function RoboPage() {
           titulo="Erros do robô"
           sub={data.graficos?.erros_min?.fonte || 'Alertas e falhas no período.'}
           categorias={data.graficos?.erros_min?.rotulos}
-          series={[{ nome: 'Erros', dados: data.graficos?.erros_min?.n || [], cor: '#b42318' }]}
+          series={[{ nome: 'Erros', dados: data.graficos?.erros_min?.n || [] }]}
           vazio={data.graficos?.erros_min?.motivo || 'sem dado'}
         />
       </section>
@@ -114,7 +115,7 @@ export function RoboPage() {
           {(data.catalogo || []).map((m) => (
             <div
               key={m.id}
-              className="rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/50 p-4"
+              className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4 shadow-[var(--shadow)]"
             >
               <MetricTooltip metricId={m.id}>
                 <span className="font-display text-lg">{m.name}</span>

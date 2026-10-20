@@ -11,19 +11,19 @@ const LABELS: Record<string, string> = {
 }
 
 const TONES: Record<string, string> = {
-  loading: 'border-[var(--color-line)] text-[var(--color-mist)]',
-  ok: 'border-[color-mix(in_oklab,var(--color-ok)_45%,transparent)] text-[var(--color-ok)]',
-  empty: 'border-[var(--color-line)] text-[var(--color-empty)]',
-  error: 'border-[color-mix(in_oklab,var(--color-danger)_50%,transparent)] text-[var(--color-danger)]',
-  stale: 'border-[color-mix(in_oklab,var(--color-stale)_50%,transparent)] text-[var(--color-stale)]',
-  unavailable: 'border-[color-mix(in_oklab,var(--color-accent-2)_45%,transparent)] text-[var(--color-accent-2)]',
+  loading: 'bg-[var(--color-panel-2)] text-[var(--color-mist)]',
+  ok: 'bg-[color-mix(in_oklab,var(--color-ok)_16%,transparent)] text-[var(--color-ok)]',
+  empty: 'bg-[var(--color-panel-2)] text-[var(--color-empty)]',
+  error: 'bg-[color-mix(in_oklab,var(--color-danger)_16%,transparent)] text-[var(--color-danger)]',
+  stale: 'bg-[color-mix(in_oklab,var(--color-stale)_16%,transparent)] text-[var(--color-stale)]',
+  unavailable: 'bg-[color-mix(in_oklab,var(--color-accent-2)_16%,transparent)] text-[var(--color-accent-2)]',
 }
 
 export function StateBadge({ state }: { state: string }) {
   return (
     <span
       className={clsx(
-        'inline-flex items-center gap-1.5 rounded border px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide',
+        'inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide',
         TONES[state] || TONES.empty,
       )}
     >
@@ -46,7 +46,7 @@ export function StateBlock({
 
   if (state === 'loading') {
     return (
-      <div className="space-y-2 rounded-md border border-[var(--color-line)] bg-[var(--color-panel)]/70 p-4">
+      <div className="space-y-2 rounded-2xl border shadow-[var(--shadow)] border-[var(--color-line)] bg-[var(--color-panel)]/70 p-4">
         {title && <div className="text-sm text-[var(--color-mist)]">{title}</div>}
         <div className="skeleton h-8 w-2/3" />
         <div className="skeleton h-4 w-1/2" />
@@ -57,7 +57,7 @@ export function StateBlock({
 
   if (state === 'error') {
     return (
-      <div className="rounded-md border border-[color-mix(in_oklab,var(--color-danger)_40%,transparent)] bg-[var(--color-panel)]/80 p-4">
+      <div className="rounded-2xl border shadow-[var(--shadow)] border-[color-mix(in_oklab,var(--color-danger)_40%,transparent)] bg-[var(--color-panel)]/80 p-4">
         <div className="mb-2 flex items-center justify-between gap-2">
           {title && <h3 className="text-sm font-medium">{title}</h3>}
           <StateBadge state="error" />
@@ -69,7 +69,7 @@ export function StateBlock({
 
   if (state === 'empty') {
     return (
-      <div className="rounded-md border border-dashed border-[var(--color-line)] bg-[var(--color-panel)]/40 p-4">
+      <div className="rounded-2xl border shadow-[var(--shadow)] border-dashed border-[var(--color-line)] bg-[var(--color-panel)]/40 p-4">
         <div className="mb-2 flex items-center justify-between gap-2">
           {title && <h3 className="text-sm font-medium text-[var(--color-mist)]">{title}</h3>}
           <StateBadge state="empty" />
@@ -81,7 +81,7 @@ export function StateBlock({
 
   if (state === 'unavailable') {
     return (
-      <div className="rounded-md border border-[color-mix(in_oklab,var(--color-accent-2)_40%,transparent)] bg-[var(--color-panel)]/80 p-4">
+      <div className="rounded-2xl border shadow-[var(--shadow)] border-[color-mix(in_oklab,var(--color-accent-2)_40%,transparent)] bg-[var(--color-panel)]/80 p-4">
         <div className="mb-2 flex items-center justify-between gap-2">
           {title && <h3 className="text-sm font-medium">{title}</h3>}
           <StateBadge state="unavailable" />
@@ -107,7 +107,7 @@ export function StateBlock({
   return (
     <div
       className={clsx(
-        'rounded-md border bg-[var(--color-panel)]/75 p-4',
+        'rounded-2xl border shadow-[var(--shadow)] bg-[var(--color-panel)]/75 p-4',
         state === 'stale'
           ? 'border-[color-mix(in_oklab,var(--color-stale)_40%,transparent)]'
           : 'border-[var(--color-line)]',

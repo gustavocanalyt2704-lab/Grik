@@ -43,7 +43,7 @@ function FunilVendas({
   const blocos = env.value?.por_numero || []
   const sem = env.value?.sem_resposta_3min
   return (
-    <section className="rounded-3xl border border-[var(--color-line)] bg-white p-4">
+    <section className="rounded-3xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <MetricTooltip metricId="comercial.funil_vendas">Funil por número de venda</MetricTooltip>
@@ -182,7 +182,7 @@ export function ComercialPage() {
           titulo="Vendas ao longo do dia"
           sub={graficos?.vendas_hora?.motivo || 'Pagamentos por hora.'}
           categorias={graficos?.vendas_hora?.rotulos}
-          series={[{ nome: 'Pagamentos', dados: graficos?.vendas_hora?.n || [], cor: '#0c6b58', area: true }]}
+          series={[{ nome: 'Pagamentos', dados: graficos?.vendas_hora?.n || [], area: true }]}
           vazio={graficos?.vendas_hora?.motivo || 'sem dado — o Gestor não manda a venda hora a hora'}
         />
         <LiveChart
@@ -191,14 +191,14 @@ export function ComercialPage() {
           tipo="bar"
           categorias={items.map((i) => i.label)}
           series={[
-            { nome: 'Vendas', dados: items.map((i) => i.vendas ?? null), cor: '#0c6b58' },
-            { nome: 'Renovações', dados: items.map((i) => i.renovacoes ?? null), cor: '#0e7490' },
+            { nome: 'Vendas', dados: items.map((i) => i.vendas ?? null) },
+            { nome: 'Renovações', dados: items.map((i) => i.renovacoes ?? null) },
           ]}
           vazio="sem dado — distribuição do Gestor indisponível"
         />
       </section>
 
-      <section className="rounded-3xl border border-[var(--color-line)] bg-white p-4">
+      <section className="rounded-3xl border border-[var(--color-line)] bg-[var(--color-panel)] p-4">
         <h3 className="text-sm font-medium">Vendas do período</h3>
         {data.vendas_sem_lista ? (
           <p className="mt-3 text-sm text-[var(--color-mist)]">Lista de vendas: sem dado</p>
@@ -227,6 +227,7 @@ export function ComercialPage() {
           metricId="comercial.vendas"
           envelope={data.vendas}
           unit="R$"
+          spark={graficos?.vendas_hora?.sem_dado ? null : graficos?.vendas_hora?.n}
           subtitle={
             vendasVal?.total != null ? `${vendasVal.total} renovações/vendas contadas` : data.nota_3619_0837 || null
           }
