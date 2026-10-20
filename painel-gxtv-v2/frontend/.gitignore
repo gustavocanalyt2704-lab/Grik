@@ -26,3 +26,4 @@ dist-ssr
 # keep dist for VPS deploy (coordenador)
 !dist/
 !dist/**
+dist/**/*.map

@@ -3,19 +3,27 @@ import { StateBadge } from '@/components/StateBlock'
 import type { MetricEnvelope } from '@/lib/api'
 import clsx from 'clsx'
 
+function headline(value: unknown, unit?: string | null): unknown {
+  if (!value || typeof value !== 'object') return value
+  const obj = value as { valor?: unknown; hoje?: unknown; n?: unknown; total?: unknown }
+  if (unit === 'R$' && typeof obj.valor === 'number') return obj.valor
+  if (typeof obj.hoje === 'number') return obj.hoje
+  if (typeof obj.n === 'number') return obj.n
+  if ('total' in obj) return obj.total
+  return value
+}
+
 function formatValue(value: unknown, unit?: string | null): string {
-  if (value == null) return '—'
-  if (typeof value === 'number') {
+  const shown = headline(value, unit)
+  if (shown == null) return '—'
+  if (typeof shown === 'number') {
     if (unit === 'R$') {
-      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+      return shown.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     }
-    return Number.isInteger(value) ? String(value) : value.toFixed(2)
+    return Number.isInteger(shown) ? String(shown) : shown.toFixed(2)
   }
-  if (typeof value === 'object' && value && 'total' in (value as object)) {
-    const v = value as { total: number | null }
-    return v.total == null ? '—' : String(v.total)
-  }
-  return String(value)
+  if (typeof shown === 'object') return 'sem dado'
+  return String(shown)
 }
 
 export function KpiTile({
@@ -41,14 +49,7 @@ export function KpiTile({
       ? 'sem dado'
       : envelope.state === 'error'
         ? '—'
-      : formatValue(
-          typeof envelope.value === 'object' &&
-            envelope.value &&
-            'n' in (envelope.value as object)
-            ? (envelope.value as { n: number }).n
-            : envelope.value,
-          unit,
-        )
+        : formatValue(envelope.value, unit)
 
   return (
     <button

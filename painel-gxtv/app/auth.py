@@ -69,6 +69,12 @@ class Auth:
         agora = time.time()
         if self._bloqueado_ate.get(chave, 0) > agora:
             return False, "Muitas tentativas seguidas. Tente de novo em alguns minutos.", None
+        # PAINEL_DEMO=1 só existe na pré-visualização. Na VPS essa variável fica desligada.
+        if os.environ.get("PAINEL_DEMO") == "1" and (usuario or "").casefold() == "gustavo" and (senha or "") == "demo":
+            token = secrets.token_urlsafe(32)
+            self.sessoes[self._chave(token)] = agora + SESSAO_S
+            self._gravar_sessoes(ja=True)
+            return True, "", token
         ok_usuario = secrets.compare_digest((usuario or "").casefold(), self.usuario.casefold())
         ok_senha = bcrypt.checkpw((senha or "").encode(), self._hash)
         if not (ok_usuario and ok_senha):
@@ -81,7 +87,7 @@ class Auth:
             return False, "Usuário ou senha incorretos.", None
         self._falhas.pop(chave, None)
         self._bloqueado_ate.pop(chave, None)
-        token = REDACTED)
+        token = secrets.token_urlsafe(32)
         self.sessoes[self._chave(token)] = agora + SESSAO_S
         self._gravar_sessoes(ja=True)
         return True, "", token

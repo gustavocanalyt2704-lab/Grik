@@ -8,6 +8,7 @@ import { KpiTile } from '@/components/KpiTile'
 import { LiveLog } from '@/components/LiveLog'
 import { DrilldownPanel } from '@/components/DrilldownPanel'
 import { GestorBanner } from '@/components/GestorBanner'
+import { LiveChart, type Graficos } from '@/components/LiveChart'
 import type { CampoNumero, GrupoNumeros, NumeroCard, ResumoLateral } from '@/lib/api'
 
 const PERIODOS = [
@@ -144,6 +145,7 @@ export function HomePage() {
   const espera = k.esperando_15min.value
   const entrada = data.entrada_viva
   const grupos = data.numeros?.grupos || []
+  const graficos = (data as { graficos?: Graficos }).graficos
   const hoje = new Intl.DateTimeFormat('pt-BR', {
     weekday: 'long',
     day: 'numeric',
@@ -256,6 +258,37 @@ export function HomePage() {
           unit="cli/min"
           onDrill={() => setDrill('inicio.clientes_min')}
           delay={200}
+        />
+      </section>
+
+      <section className="grid gap-3 lg:grid-cols-2">
+        <LiveChart
+          titulo="Mensagens por minuto"
+          sub="Última hora, lida da fila do webhook. O detalhe por WhatsApp continua na lista acima."
+          categorias={graficos?.mensagens_min?.rotulos}
+          series={[
+            { nome: 'Recebidas', dados: graficos?.mensagens_min?.recebidas || [], cor: '#0e7490', area: true },
+            { nome: 'Enviadas', dados: graficos?.mensagens_min?.enviadas || [], cor: '#0c6b58' },
+          ]}
+          vazio={graficos?.mensagens_min?.motivo || graficos?.motivo || 'sem dado'}
+        />
+        <LiveChart
+          titulo="Envio do robô contra o teto"
+          sub={`A linha vermelha é o teto de ${graficos?.envio?.teto || graficos?.cap_envio_min || 240} mensagens por minuto.`}
+          categorias={graficos?.envio?.rotulos || []}
+          series={[{ nome: 'Enviadas / min', dados: graficos?.envio?.serie || [], cor: '#0c6b58', area: true }]}
+          marca={graficos?.envio?.teto || 240}
+          marcaNome="teto 240/min"
+          vazio={graficos?.envio?.motivo || 'sem dado'}
+        />
+        <LiveChart
+          titulo="Clientes ativos por painel"
+          sub={graficos?.ativos?.fonte || 'P3 está desligado. P1, P2, P4, P5 e P6 entram na conta. O número oficial mora na aba Ativos reais do painel da raiz.'}
+          tipo="bar"
+          categorias={(graficos?.ativos?.paineis || []).map((p) => p.id)}
+          series={[{ nome: 'Ativos', dados: (graficos?.ativos?.paineis || []).map((p) => p.n), cor: '#0c6b58' }]}
+          vazio="sem dado — o v2 não consulta o Sigma. Abra Ativos reais no painel da raiz."
+          className="lg:col-span-2"
         />
       </section>
 

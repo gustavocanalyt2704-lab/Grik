@@ -26,6 +26,7 @@ from app.services import comercial as comercial_svc
 from app.services import inicio as inicio_svc
 from app.services import operacao as operacao_svc
 from app.services import robo as robo_svc
+from app.services import series as series_svc
 from app.sources import espelho, gestor, seed
 
 router = APIRouter(prefix="/api/v2")
@@ -179,7 +180,7 @@ async def inicio(
     aparelho: str | None = Query(None),
 ) -> dict[str, Any]:
     """F2 — KPIs compactos + entrada + log snapshot + saúde."""
-    return await inicio_svc.montar_inicio(
+    payload = await inicio_svc.montar_inicio(
         {
             "periodo": periodo,
             "numero": numero,
@@ -188,6 +189,8 @@ async def inicio(
             "aparelho": aparelho,
         }
     )
+    payload["graficos"] = series_svc.ao_vivo()
+    return payload
 
 
 @router.get("/inicio/log")
@@ -433,6 +436,7 @@ async def comercial(
             "message": "Funil de vendas indisponível: %s" % exc,
             "metric_id": "comercial.funil_vendas",
         }
+    payload["graficos"] = series_svc.ao_vivo()
     return payload
 
 
@@ -459,7 +463,9 @@ async def robo(
     aparelho: str | None = Query(None),
 ) -> dict[str, Any]:
     """F6 — Robô/IA com nomes claros + tooltips do registro."""
-    return robo_svc.montar_robo(_filtros(periodo, numero, atendente, app, aparelho))
+    payload = robo_svc.montar_robo(_filtros(periodo, numero, atendente, app, aparelho))
+    payload["graficos"] = series_svc.ao_vivo()
+    return payload
 
 
 @router.get("/espelho")
@@ -638,6 +644,20 @@ async def sem_resposta(user: dict = RequireUser) -> dict[str, Any]:
     try:
         doc = json.loads(open(path, encoding="utf-8").read())
     except (OSError, ValueError):
+        if seed.seed_habilitado():
+            return {
+                "ok": True,
+                "is_seed": True,
+                "total": 3,
+                "causas": {"robô ocupado": 2, "número sem mapa": 1},
+                "gerado_em": iso_bahia(agora()),
+                "message": "Exemplo. O coletor real ainda não rodou neste computador.",
+                "itens": [
+                    {"sufixo": "9433", "instancia": "3619", "espera_min": 8, "motivo": "robô ocupado", "reprocessar": True, "numero_teste": False, "prova": "última fala do cliente sem resposta"},
+                    {"sufixo": "1204", "instancia": "0837", "espera_min": 5, "motivo": "robô ocupado", "reprocessar": True, "numero_teste": False, "prova": "fila do robô acima do normal"},
+                    {"sufixo": "7781", "instancia": "3166", "espera_min": 4, "motivo": "número sem mapa", "reprocessar": False, "numero_teste": True, "prova": "teste, sem Sigma"},
+                ],
+            }
         return {
             "ok": True,
             "total": 0,

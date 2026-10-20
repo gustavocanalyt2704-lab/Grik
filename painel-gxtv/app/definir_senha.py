@@ -20,7 +20,7 @@ def main(argv: list[str] | None = None) -> int:
     destino = Path(args[0] if args else "/root/painel-gxtv-senha.txt")
     if destino.exists() and cfg.auth_file.exists() and "--nova" not in args:
         return 0
-    senha = REDACTED)
+    senha = secrets.token_urlsafe(18)
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(senha + "\n", encoding="utf-8")
     os.chmod(destino, 0o600)

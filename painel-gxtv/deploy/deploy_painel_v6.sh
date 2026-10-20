@@ -110,7 +110,7 @@ chmod 644 /var/lib/painel-gxtv/cert.pem
 
 install -m 755 -o root -g root "$DESTINO/deploy/ler_rotinas.sh" /usr/local/lib/painel-gxtv/ler_rotinas.sh
 cat > /etc/sudoers.d/painel-gxtv << 'EOF'
-mnrobo ALL=(root) NOPASSWD: REDACTED
+mnrobo ALL=(root) NOPASSWD: /usr/local/lib/painel-gxtv/ler_rotinas.sh
 EOF
 chmod 440 /etc/sudoers.d/painel-gxtv
 visudo -cf /etc/sudoers.d/painel-gxtv >/dev/null

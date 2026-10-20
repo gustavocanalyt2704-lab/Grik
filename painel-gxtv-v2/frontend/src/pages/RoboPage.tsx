@@ -6,6 +6,7 @@ import { StateBlock } from '@/components/StateBlock'
 import { MetricTooltip } from '@/components/MetricTooltip'
 import { KpiTile } from '@/components/KpiTile'
 import { DrilldownPanel } from '@/components/DrilldownPanel'
+import { LiveChart, type Graficos } from '@/components/LiveChart'
 
 export function RoboPage() {
   const { filters } = useFilters()
@@ -49,6 +50,7 @@ export function RoboPage() {
     envios: MetricEnvelope<{ n?: number; label_claro?: string }>
     aguardando_poll: MetricEnvelope<{ n?: number; label_claro?: string }>
     catalogo: { id: string; name: string; definition: string; formula: string; source: string }[]
+    graficos?: Graficos
   }
 
   return (
@@ -84,6 +86,25 @@ export function RoboPage() {
           envelope={data.envios}
           onDrill={() => setDrill('robo.envios')}
           delay={80}
+        />
+      </section>
+
+      <section className="grid gap-3 lg:grid-cols-2">
+        <LiveChart
+          titulo="Envio contra o teto de 240 por minuto"
+          sub={data.graficos?.envio?.fonte || 'Contagem do que o robô já enviou.'}
+          categorias={data.graficos?.envio?.rotulos || []}
+          series={[{ nome: 'Envios / min', dados: data.graficos?.envio?.serie || [], area: true }]}
+          marca={data.graficos?.envio?.teto || 240}
+          marcaNome="teto 240/min"
+          vazio={data.graficos?.envio?.motivo || 'sem dado'}
+        />
+        <LiveChart
+          titulo="Erros do robô"
+          sub={data.graficos?.erros_min?.fonte || 'Alertas e falhas no período.'}
+          categorias={data.graficos?.erros_min?.rotulos}
+          series={[{ nome: 'Erros', dados: data.graficos?.erros_min?.n || [], cor: '#b42318' }]}
+          vazio={data.graficos?.erros_min?.motivo || 'sem dado'}
         />
       </section>
 

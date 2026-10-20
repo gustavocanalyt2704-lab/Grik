@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import { StateBlock } from '@/components/StateBlock'
+import { LiveChart } from '@/components/LiveChart'
 
 type Item = {
   sufixo: string
@@ -70,6 +71,16 @@ export function SemRespostaPage() {
           {data.gerado_em ? ` Atualizado ${data.gerado_em}.` : ''}
         </p>
       </section>
+
+      {data.total > 0 && (
+        <LiveChart
+          titulo="Por que ficou sem resposta"
+          sub="Cada barra é um motivo. A lista embaixo é a pessoa, só com o final do telefone."
+          tipo="bar"
+          categorias={causas.map(([motivo]) => motivo)}
+          series={[{ nome: 'Clientes', dados: causas.map(([, n]) => n), cor: '#9a3412' }]}
+        />
+      )}
 
       {data.total === 0 ? (
         <StateBlock

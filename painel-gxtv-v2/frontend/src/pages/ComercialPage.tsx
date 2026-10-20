@@ -7,6 +7,7 @@ import { MetricTooltip } from '@/components/MetricTooltip'
 import { KpiTile } from '@/components/KpiTile'
 import { DrilldownPanel } from '@/components/DrilldownPanel'
 import { GestorBanner } from '@/components/GestorBanner'
+import { LiveChart, type Graficos } from '@/components/LiveChart'
 import type { VendaLinha } from '@/lib/api'
 
 type EtapaFunil = { id: string; label: string; n: number }
@@ -161,6 +162,7 @@ export function ComercialPage() {
   const items = data.dist_whatsapp.value?.items || []
   const vendasVal = data.vendas.value as { total?: number | null; valor?: number | null } | null
   const linhas = data.vendas_linhas || []
+  const graficos = (data as { graficos?: Graficos }).graficos
 
   return (
     <div className="space-y-6">
@@ -174,6 +176,27 @@ export function ComercialPage() {
       </section>
 
       <GestorBanner aviso={data.aviso_gestor} />
+
+      <section className="grid gap-3 lg:grid-cols-2">
+        <LiveChart
+          titulo="Vendas ao longo do dia"
+          sub={graficos?.vendas_hora?.motivo || 'Pagamentos por hora.'}
+          categorias={graficos?.vendas_hora?.rotulos}
+          series={[{ nome: 'Pagamentos', dados: graficos?.vendas_hora?.n || [], cor: '#0c6b58', area: true }]}
+          vazio={graficos?.vendas_hora?.motivo || 'sem dado — o Gestor não manda a venda hora a hora'}
+        />
+        <LiveChart
+          titulo="Vendas por WhatsApp"
+          sub="3619 e 0837 entram juntos. Não é uma segunda conta do faturamento."
+          tipo="bar"
+          categorias={items.map((i) => i.label)}
+          series={[
+            { nome: 'Vendas', dados: items.map((i) => i.vendas ?? null), cor: '#0c6b58' },
+            { nome: 'Renovações', dados: items.map((i) => i.renovacoes ?? null), cor: '#0e7490' },
+          ]}
+          vazio="sem dado — distribuição do Gestor indisponível"
+        />
+      </section>
 
       <section className="rounded-3xl border border-[var(--color-line)] bg-white p-4">
         <h3 className="text-sm font-medium">Vendas do período</h3>

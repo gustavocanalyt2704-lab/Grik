@@ -369,7 +369,7 @@ def _gestor_bg():
         try:
             tel = _gestor_fila.pop()
         except KeyError:
-            REDACTED)
+            time.sleep(0.5)
             continue
         try:
             _gestor_achou(tel)

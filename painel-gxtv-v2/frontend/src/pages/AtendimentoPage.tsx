@@ -6,6 +6,7 @@ import { StateBlock } from '@/components/StateBlock'
 import { MetricTooltip } from '@/components/MetricTooltip'
 import { KpiTile } from '@/components/KpiTile'
 import { DrilldownPanel } from '@/components/DrilldownPanel'
+import { LiveChart } from '@/components/LiveChart'
 
 function fmtSec(v: unknown): string {
   if (typeof v !== 'number' || Number.isNaN(v)) return '—'
@@ -76,6 +77,14 @@ export function AtendimentoPage() {
             total {data.funil.value?.total ?? '—'} · {data.window.label}
           </span>
         </div>
+        <LiveChart
+          titulo="Funil do atendimento"
+          sub="Do contato novo até o resolvido. Toque no estágio abaixo para ver os nomes."
+          tipo="bar"
+          categorias={stages.map((s) => s.label)}
+          series={[{ nome: 'Conversas', dados: stages.map((s) => s.n), cor: '#0c6b58' }]}
+          vazio={data.funil.message || 'sem dado'}
+        />
         <StateBlock envelope={data.funil}>
           <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {stages.map((s, i) => (

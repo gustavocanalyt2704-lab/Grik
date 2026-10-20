@@ -52,8 +52,8 @@
       <p class="ix-nota">Fonte: ledger do fiscal neste servidor (renov_ledger.jsonl + usados.jsonl). Cada comprovante conta uma vez. Sem API do DataCrazy.</p>`;
   }
 
-  function numeros(lista, ok) {
-    if (!lista || !lista.length) return `<p class="ix-mudo">Por número: calculando…</p>`;
+  function numeros(lista) {
+    if (!lista || !lista.length) return "";
     const maxR = Math.max(1, ...lista.map((n) => n.renov_reais || 0));
     return lista.map((n) => `<article class="ix-num">
         <header><b>${esc(n.numero)}</b>${n.sem_resposta ? `<span class="ix-alerta">${int(n.sem_resposta)} sem resposta</span>` : ""}</header>
@@ -75,10 +75,12 @@
     const chave = JSON.stringify([estado.financeiro, estado.por_numero, estado.por_numero_ok, new Date().getHours()]);
     if (chave === ultimo) return;
     ultimo = chave;
+    const bloco = numeros(estado.por_numero);
+    if (!bloco) { host.innerHTML = ""; return; }
     host.innerHTML = `
       <!-- PAINEL_1110: financeiro saiu daqui (está na aba Vendas, sem duplicar) -->
-      <section class="ix-bloco"><h2 class="ix-tit">Por número de WhatsApp</h2>
-        <div class="ix-nums">${numeros(estado.por_numero, estado.por_numero_ok)}</div>
+      <section class="ix-bloco"><h2 class="ix-tit">Renovações por WhatsApp</h2>
+        <div class="ix-nums">${bloco}</div>
         <p class="ix-nota">Renovações: ledger do fiscal. Clientes e mensagens: registro do webhook. "Quem atendeu" (registro do webhook, em clientes): Robô = clientes que receberam resposta do robô; nomes = atendente atribuído à conversa no DataCrazy (o webhook não registra o que o humano digita). "Sem resposta": espelho (parcial).</p>
       </section>`;
   }

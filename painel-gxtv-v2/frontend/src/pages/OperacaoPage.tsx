@@ -6,6 +6,7 @@ import { StateBlock } from '@/components/StateBlock'
 import { MetricTooltip } from '@/components/MetricTooltip'
 import { KpiTile } from '@/components/KpiTile'
 import { DrilldownPanel } from '@/components/DrilldownPanel'
+import { LiveChart } from '@/components/LiveChart'
 
 export function OperacaoPage() {
   const { filters } = useFilters()
@@ -115,6 +116,24 @@ export function OperacaoPage() {
             {p ? `${p.delta_media_7d >= 0 ? '+' : ''}${p.delta_media_7d}` : '—'}
           </div>
         </div>
+      </section>
+
+      <section className="grid gap-3 lg:grid-cols-2">
+        <LiveChart
+          titulo="Problemas por hora"
+          sub="Horário da Bahia. Sai das conversas do webhook, não de uma planilha nova."
+          categorias={(corr?.por_hora || []).map((h) => `${h.hora}h`)}
+          series={[{ nome: 'Problemas', dados: (corr?.por_hora || []).map((h) => h.n), cor: '#9a3412', area: true }]}
+          vazio="sem dado"
+        />
+        <LiveChart
+          titulo="Problemas por app"
+          sub="Onde o cliente cita o aplicativo junto com o problema."
+          tipo="bar"
+          categorias={(corr?.por_app || []).map((a) => a.app)}
+          series={[{ nome: 'Casos', dados: (corr?.por_app || []).map((a) => a.n), cor: '#0c6b58' }]}
+          vazio="sem dado"
+        />
       </section>
 
       {data.utra_lg ? (

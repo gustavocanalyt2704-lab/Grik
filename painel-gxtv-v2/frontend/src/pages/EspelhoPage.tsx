@@ -86,9 +86,14 @@ export function EspelhoPage() {
         <StateBlock title="Pacote saúde" envelope={data.saude}>
           <MetricTooltip metricId="inicio.saude_espelho">meta + fila</MetricTooltip>
           {data.saude.value && (
-            <pre className="mt-2 overflow-auto font-mono text-[11px] text-[var(--color-mist)]">
-              {JSON.stringify(data.saude.value, null, 2)}
-            </pre>
+            <dl className="mt-3 grid grid-cols-2 gap-2 text-sm">
+              {Object.entries(data.saude.value).map(([chave, valor]) => (
+                <div key={chave} className="rounded-xl bg-[var(--color-panel-2)] px-3 py-2">
+                  <dt className="text-[11px] uppercase tracking-wide text-[var(--color-mist)]">{chave.replaceAll('_', ' ')}</dt>
+                  <dd className="font-mono text-[var(--color-ink)]">{valor == null ? 'sem dado' : String(valor)}</dd>
+                </div>
+              ))}
+            </dl>
           )}
         </StateBlock>
       </section>

@@ -425,7 +425,7 @@ function fechar() { $("#gaveta").hidden = true; }
 
 // INICIO_0810: só sobram estas abas. A aba aberta fica guardada (hash + navegador),
 // então se o navegador recarregar a página ao voltar para ela, abre na mesma aba.
-const VISTAS = new Set(["inicio", "vendas-nr", "vendas", "mensagens", "saude", "ranking-apps", "ativos"]);  // PAINEL_1110
+const VISTAS = new Set(["inicio", "vendas-nr", "vendas", "mensagens", "saude", "ranking-apps", "ativos", "acoes"]);
 const VISTA_ANTIGA = { vivo: "mensagens", semana: "mensagens" };
 let subMsg = "vivo";
 try { subMsg = localStorage.getItem("p11_msg") || "vivo"; } catch (e) { /* */ }
@@ -513,6 +513,9 @@ function conectar() {
     const pacote = JSON.parse(ev.data);
     if (pacote.aviso_local) document.body.classList.add("aviso-local");
     estado = pacote.estado;
+    window.__painelEstado = estado;
+    const envios = estado && estado.gavetas && estado.gavetas.saude && estado.gavetas.saude.envios_min;
+    if (envios != null) window.dispatchEvent(new CustomEvent("painel-envio", { detail: envios }));
     render();
   });
   fonte.addEventListener("ping", marcarVivo);

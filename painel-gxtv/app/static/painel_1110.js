@@ -123,18 +123,12 @@
     return `<div class="p11-barras">${col}</div>${b.n_dia_anterior ? `<p class="p11-mudo"><i class="p11-leg val"></i> pagamentos ${periodoV === "hoje" ? "hoje" : "no dia"} <i class="p11-leg ref"></i> dia anterior</p>` : ""}`;
   }
   function funilHtml(f) {
-    const t = f.total, et = f.etapas;
-    const linhas = et.map(([k, rot], i) => {
-      const v = t[k], base = t.leads || 1, prov = k === "cadastro";
-      const perda = i ? `<span class="p11-perda">${pct(v, t[et[i - 1][0]])} do passo anterior</span>` : "";
-      return `<div class="p11-fn${prov ? " prov" : ""}"><span class="p11-fn-rot">${rot}${prov ? " <em>provisório</em>" : ""}</span>
-        <span class="p11-fn-tr"><i style="width:${Math.max(1, (v / base) * 100)}%"></i></span><b class="num">${int(v)}</b>${perda}</div>`;
-    }).join("");
+    const t = f.total;
     const nums = f.por_numero.map((n) => `<tr><td>${e(n.numero)}</td><td>${int(n.leads)}</td><td>${int(n.teste)} <small>${pct(n.teste, n.leads)}</small></td><td>${int(n.pagou)} <small>${pct(n.pagou, n.teste)}</small></td><td>${int(n.cadastro)}</td></tr>`).join("");
-    return `<div class="p11-card"><div class="p11-topo"><h3>Funil do lead</h3>${f.maior_vazamento ? `<span class="p11-vaza">Vaza mais em: <b>${e(f.maior_vazamento)}</b> (${Math.round(f.taxa_vazamento * 100)}% passam)</span>` : ""}</div>
-      ${linhas}
-      ${nums ? `<table class="p11-tab"><thead><tr><th>Número</th><th>Leads</th><th>Teste</th><th>Pagou</th><th>Cadastro</th></tr></thead><tbody>${nums}</tbody></table>` : ""}
-      <p class="p11-mudo">${e(f.nota)}${t.cadastro_sem_dado ? ` ${int(t.cadastro_sem_dado)} ainda sem consulta.` : ""}</p></div>`;
+    const vaza = f.maior_vazamento ? `<span class="p11-vaza">Vaza mais em: <b>${e(f.maior_vazamento)}</b> (${Math.round(f.taxa_vazamento * 100)}% passam)</span>` : "";
+    return `<div class="p11-card"><div class="p11-topo"><h3>Por WhatsApp</h3>${vaza}</div>
+      ${nums ? `<table class="p11-tab"><thead><tr><th>Número</th><th>Leads</th><th>Teste</th><th>Pagou</th><th>Cadastro</th></tr></thead><tbody>${nums}</tbody></table>` : `<p class="p11-mudo">sem dado por WhatsApp</p>`}
+      <p class="p11-mudo">${e(f.nota)}${t.cadastro_sem_dado ? ` ${int(t.cadastro_sem_dado)} ainda sem consulta.` : ""} O desenho das etapas está no gráfico acima.</p></div>`;
   }
   async function vendas() {
     const box = $("#vendas-corpo");
@@ -154,36 +148,20 @@
     const r = v.resumo, c = v.comparacao;
     let comp = "";
     if (v.periodo === "hoje") {
-      comp = kpi("Ontem até esta hora", brl0(c.ontem.reais), `${int(c.ontem.n)} pagamentos ${delta(r.reais, c.ontem.reais, true)}`) +
-        kpi("Mesmo dia semana passada", brl0(c.semana_passada.reais), `${int(c.semana_passada.n)} até esta hora ${delta(r.reais, c.semana_passada.reais, true)}`) +
-        kpi("Média 7 dias (até esta hora)", brl0(c.media_7d.reais), `${String(c.media_7d.n).replace(".", ",")} pagamentos ${delta(r.reais, c.media_7d.reais, true)}`);
+      comp = `Ontem até esta hora ${brl0(c.ontem.reais)} (${int(c.ontem.n)}) ${delta(r.reais, c.ontem.reais, true)} · semana passada ${brl0(c.semana_passada.reais)} · média 7 dias ${brl0(c.media_7d.reais)}.`;
     } else if (v.periodo === "ontem") {
-      comp = kpi("Anteontem", brl0(c.anteontem.reais), `${int(c.anteontem.n)} pagamentos ${delta(r.reais, c.anteontem.reais, true)}`) +
-        kpi("Mesmo dia semana passada", brl0(c.semana_passada.reais), `${int(c.semana_passada.n)} pagamentos ${delta(r.reais, c.semana_passada.reais, true)}`);
+      comp = `Anteontem ${brl0(c.anteontem.reais)} ${delta(r.reais, c.anteontem.reais, true)} · mesmo dia da semana passada ${brl0(c.semana_passada.reais)}.`;
     } else {
-      comp = kpi("7 dias anteriores", brl0(c["7d_anteriores"].reais), `${int(c["7d_anteriores"].n)} pagamentos ${delta(r.reais, c["7d_anteriores"].reais, true)}`);
+      comp = `7 dias anteriores ${brl0(c["7d_anteriores"].reais)} (${int(c["7d_anteriores"].n)}) ${delta(r.reais, c["7d_anteriores"].reais, true)}.`;
     }
-    const maxN = Math.max(1, ...v.por_numero.map((n) => n.reais));
-    const nums = v.por_numero.map((n) => `<div class="p11-hb"><span class="p11-hb-nome">${e(n.numero)}</span><span class="p11-hb-tr"><i style="width:${(n.reais / maxN) * 100}%"></i></span>
-      <span class="num">${int(n.n)}×${n.novas ? ` <small>(${int(n.novas)} novas)</small>` : ""}</span><b class="num">${brl(n.reais)}</b><span class="num p11-mudo">tkt ${brl(n.ticket)}</span></div>`).join("");
-    const ult = v.ultimas.map((u) => `<div class="p11-ult"><span>${e(u.hora)}</span><span>${e(u.numero)}</span><span>${u.nova ? '<em class="p11-nova">nova</em>' : "renov."} ${e(u.plano || "")}</span><b>${brl(u.valor)}</b></div>`).join("");
-    const planos = v.planos.map(([p, n]) => `<span class="p11-tag">${e(p)} <b>${int(n)}</b></span>`).join("");
+    const nums = (v.por_numero || []).map((n) => `${e(n.numero)} ${brl(n.reais)} (${int(n.n)})`).join(" · ");
     box.innerHTML = `
       <div class="p11-topo"><div class="p11-seg">${[["hoje", "Hoje"], ["ontem", "Ontem"], ["7d", "7 dias"]].map(([k, t]) => `<button type="button" data-p11p="${k}" class="${v.periodo === k ? "on" : ""}">${t}</button>`).join("")}</div>
         <span class="p11-mudo">atualizado ${e(v.agora.slice(11, 16))}</span></div>
-      <div class="p11-kpis">
-        ${kpi("Vendido", brl0(r.reais), `${int(r.n)} pagamentos${v.sem_valor ? ` · ${int(v.sem_valor)} sem valor` : ""}`)}
-        ${kpi("Ticket médio", brl(r.ticket), `${int(r.novas)} vendas novas (${brl0(r.novas_reais)}) · ${int(r.n - r.novas)} renovações`)}
-        ${comp}
-      </div>
-      <div class="p11-duas">
-        <div class="p11-card"><h3>Por número</h3>${nums || '<p class="p11-mudo">nenhum pagamento no período</p>'}
-          <h3 class="p11-h3b">${v.barras.tipo === "dia" ? "Por dia" : "Por hora"}</h3>${barras(v.barras)}</div>
-        <div class="p11-card"><h3>Últimos pagamentos</h3>${ult || '<p class="p11-mudo">nenhum ainda</p>'}
-          <h3 class="p11-h3b">Duração do plano</h3><div class="p11-tags">${planos || "—"}</div></div>
-      </div>
+      <p class="p11-mudo">No período: ${brl0(r.reais)} em ${int(r.n)} pagamentos. ${comp} A lista de cada Pix está na aba Vendas. O gráfico de hora em hora está na Visão geral.</p>
+      <p class="p11-mudo">Por WhatsApp: ${nums || "sem pagamento no período"}.</p>
       ${funilHtml(v.funil)}
-      <p class="p11-mudo">Fonte: ${e(v.fonte)}. Cada comprovante conta uma vez. "Nova" = o fiscal marcou venda nova (primeira linha paga).</p>`;
+      <p class="p11-mudo">Fonte: ${e(v.fonte)}. Cada comprovante conta uma vez.</p>`;
   }
 
   // ------------------------------------------------------------ saúde

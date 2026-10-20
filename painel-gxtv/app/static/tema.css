@@ -1,0 +1,257 @@
+/* Camada visual única por cima das abas antigas. Não troca o que os botões fazem. */
+:root {
+  --bg: #070b14;
+  --bg-2: #0c1220;
+  --surface: #121a2b;
+  --surface-2: #182338;
+  --line: #243049;
+  --line-2: #31405f;
+  --text: #f4f7fb;
+  --muted: #a8b3c7;
+  --faint: #8b93a7;
+  --cyan: #5eead4;
+  --green: #34d399;
+  --amber: #fbbf24;
+  --red: #f87171;
+  --violet: #c4b5fd;
+  --radius: 18px;
+  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background:
+    radial-gradient(900px 420px at 100% -10%, rgba(94, 234, 212, .12), transparent 55%),
+    radial-gradient(700px 380px at -10% 0, rgba(196, 181, 253, .1), transparent 50%),
+    var(--bg);
+  font-family: var(--font);
+}
+
+.topbar {
+  background: rgba(7, 11, 20, .9);
+  border-bottom-color: var(--line);
+}
+.brand small { letter-spacing: .04em; }
+.brand-logo {
+  background: linear-gradient(145deg, #5eead4, #67e8f9);
+  color: #042f2e;
+}
+.chip {
+  border-color: var(--line);
+  background: var(--surface);
+}
+.chip.on {
+  background: #5eead4;
+  border-color: #5eead4;
+  color: #042f2e;
+}
+.card, .p11-card, .vv-kpi, .vd-kpi, .ar-card, .ar-grande, .at-card, .ra-card, .sm-card, .rk-kpi {
+  background: linear-gradient(180deg, rgba(24, 35, 56, .96), rgba(12, 18, 32, .96));
+  border-color: var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .18);
+}
+.p11-big, .vv-big, .ar-grande b, .vd-kpi b, .at-num, .rk-big {
+  letter-spacing: -0.04em;
+}
+.p11-kpis, .vv-kpis, .vd-kpis, .ar-grade, .at-grade, .ra-grade {
+  gap: 12px;
+}
+
+.demo-banner {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(251, 191, 36, .16);
+  color: #fde68a;
+  border-bottom: 1px solid rgba(251, 191, 36, .35);
+  font-size: 13px;
+}
+body.modo-demo .demo-banner { display: flex; }
+
+.gx-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 12px 0 4px;
+}
+.gx-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 14px 10px;
+  min-width: 0;
+}
+.gx-card h3 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text);
+}
+.gx-card header p, .gx-vazio {
+  margin: 4px 0 8px;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+.gx-svg { width: 100%; height: auto; display: block; }
+.gx-leg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.gx-leg i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 99px;
+  margin-right: 5px;
+}
+.gx-hbars { display: flex; flex-direction: column; gap: 8px; }
+.gx-hbar {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+}
+.gx-hbar .trilha {
+  height: 10px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, .06);
+  overflow: hidden;
+}
+.gx-hbar i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #5eead4, #67e8f9);
+}
+.gx-hbar.off { color: var(--faint); }
+.gx-hbar.off i { background: #475569; }
+.gx-funil { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.gx-funil li {
+  display: grid;
+  grid-template-columns: minmax(92px, 1.1fr) 1.4fr auto;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+}
+.gx-funil small { grid-column: 1 / -1; color: var(--faint); font-size: 11px; margin-top: -4px; }
+.gx-funil .trilha {
+  height: 14px;
+  background: rgba(255, 255, 255, .05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.gx-funil i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #5eead4, #c4b5fd);
+  border-radius: 8px;
+}
+.gx-gauge { position: relative; max-width: 220px; margin: 0 auto 4px; }
+.gx-gauge svg { width: 100%; height: auto; }
+.gx-gauge div {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  text-align: center;
+}
+.gx-gauge b { display: block; font-size: 28px; letter-spacing: -.04em; line-height: 1; }
+.gx-gauge small { color: var(--muted); font-size: 12px; }
+.gx-luzes { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.gx-luz {
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid var(--line);
+}
+.gx-luz.ok { color: #34d399; }
+.gx-luz.ruim { color: #f87171; border-color: rgba(248, 113, 113, .45); }
+
+.acoes-caixa { max-width: 720px; }
+.acoes-botoes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.acoes-grupo {
+  margin: 8px 0 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.acoes-botoes button, #acaoBuscar, .btn-primary, .btn-sec {
+  min-height: 48px;
+  border-radius: 12px;
+}
+.acoes-botoes button {
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+  text-align: left;
+  padding: 0 14px;
+  font-weight: 700;
+}
+.acoes-botoes button:active { transform: translateY(1px); }
+.acoes-busca { display: flex; gap: 8px; }
+.acoes-busca input, .login-card input, .vd-topo input {
+  min-height: 48px;
+  font-size: 16px;
+}
+
+.vd-tab, .p11-tab, .sm-tab, .ra-tab, .vv-nums {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#vivo-corpo .vv-graf:nth-of-type(2) { display: none; }
+
+@media (max-width: 860px) {
+  .top-row { flex-wrap: wrap; align-items: center; }
+  .chips {
+    position: fixed;
+    z-index: 35;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    margin: 0;
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    background: rgba(7, 11, 20, .96);
+    border-top: 1px solid var(--line);
+    backdrop-filter: blur(12px);
+    overflow: visible;
+  }
+  .chip {
+    justify-content: center;
+    min-height: 44px;
+    padding: 6px 4px;
+    font-size: 12px;
+    border-radius: 12px;
+  }
+  main { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+  .p11-kpis, .vv-kpis, .vd-kpis { grid-template-columns: 1fr 1fr; }
+  .p11-big, .big { font-size: 28px; }
+  .gx-funil li { grid-template-columns: 1fr auto; }
+  .gx-funil .trilha { grid-column: 1 / -1; }
+  .login-card { padding: 20px; }
+}
+
+@media (min-width: 861px) {
+  .chips {
+    flex: 1 1 auto;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .top-row { flex-wrap: wrap; }
+}
+
+body.tv .chips { display: none !important; }
+body.tv main { padding-bottom: 28px; }
+body.tv .gx-card h3 { font-size: 22px; }
+body.tv .gx-gauge b { font-size: 42px; }

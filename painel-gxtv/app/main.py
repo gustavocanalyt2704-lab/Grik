@@ -138,9 +138,12 @@ def criar_app(cfg=None) -> FastAPI:
     def _logado(request: Request) -> bool:
         return auth.valida(_token(request))
 
+    def _demo() -> bool:
+        return os.environ.get("PAINEL_DEMO") == "1"
+
     @app.get("/api/ping")
     async def ping():
-        return {"ok": True, "servico": "painel-gxtv"}
+        return {"ok": True, "servico": "painel-gxtv", "demo": _demo()}
 
     @app.get("/api/eu")
     async def eu(request: Request):
@@ -245,6 +248,10 @@ def criar_app(cfg=None) -> FastAPI:
             return JSONResponse({"ok": False}, status_code=401)
         if periodo not in ("4h", "7d", "tudo"):
             periodo = "4h"
+        if _demo():
+            from app.demo_dados import ranking as ranking_demo
+
+            return JSONResponse(ranking_demo())
         def _pacote():
             from app.ranking_apps_metricas import pacote as _p
             return _p(periodo)
@@ -263,6 +270,10 @@ def criar_app(cfg=None) -> FastAPI:
     async def api_atendidos_hoje(request: Request):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import atendidos as atendidos_demo
+
+            return JSONResponse(atendidos_demo())
         def _pacote():
             from app.atendidos_hoje import pacote as _p
             return _p()
@@ -272,15 +283,32 @@ def criar_app(cfg=None) -> FastAPI:
     async def api_mensagens_semana(request: Request):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import semana as semana_demo
+
+            return JSONResponse(semana_demo())
         def _pacote():
             from app.mensagens_semana import pacote as _p
             return _p()
         return JSONResponse(await asyncio.to_thread(_pacote))
 
+    @app.get("/api/graficos")
+    async def api_graficos(request: Request):
+        """Séries ao vivo. Só junta leituras que o painel já faz."""
+        if not _logado(request):
+            return JSONResponse({"ok": False}, status_code=401)
+        from app.graficos_ao_vivo import montar as montar_graficos
+
+        return JSONResponse(await asyncio.to_thread(montar_graficos, nucleo))
+
     @app.get("/api/vendas")  # VENDAS_1110: venda nova x renovação por dia (arquivos locais)
     async def api_vendas(request: Request, dia: str = ""):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import vendas_dia
+
+            return JSONResponse(vendas_dia())
         def _pacote():
             from app.vendas_painel import pacote as _p
             return _p(dia or None)
@@ -290,6 +318,10 @@ def criar_app(cfg=None) -> FastAPI:
     async def api_p11_vendas(request: Request, periodo: str = "hoje"):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import vendas_p11
+
+            return JSONResponse(vendas_p11(periodo if periodo in ("hoje", "ontem", "7d") else "hoje"))
         from app.painel_1110 import vendas as _v
         return JSONResponse(await asyncio.to_thread(_v, periodo if periodo in ("hoje", "ontem", "7d") else "hoje"))
 
@@ -297,6 +329,10 @@ def criar_app(cfg=None) -> FastAPI:
     async def api_p11_saude(request: Request):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import saude as saude_demo
+
+            return JSONResponse(saude_demo())
         from app.painel_1110 import saude as _s
         return JSONResponse(await asyncio.to_thread(_s))
 
@@ -304,6 +340,10 @@ def criar_app(cfg=None) -> FastAPI:
     async def api_p11_alertas(request: Request):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import alertas as alertas_demo
+
+            return JSONResponse(alertas_demo())
         from app.painel_1110 import alertas as _a
         return JSONResponse(await asyncio.to_thread(_a))
 
@@ -311,6 +351,10 @@ def criar_app(cfg=None) -> FastAPI:
     async def api_vivo(request: Request):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import vivo as vivo_demo
+
+            return JSONResponse(vivo_demo())
         from app.webhook_vivo import VIVO
 
         pacote = await asyncio.to_thread(VIVO.pacote)
@@ -321,6 +365,10 @@ def criar_app(cfg=None) -> FastAPI:
     async def api_ativos_reais(request: Request):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import ativos as ativos_demo
+
+            return JSONResponse(ativos_demo())
         try:
             import json as _j
             d = _j.load(open("/var/lib/painel-gxtv/ativos_reais.json", encoding="utf-8"))
@@ -333,6 +381,10 @@ def criar_app(cfg=None) -> FastAPI:
     async def cliente(request: Request, q: str = ""):
         if not _logado(request):
             return JSONResponse({"ok": False}, status_code=401)
+        if _demo():
+            from app.demo_dados import cliente as cliente_demo
+
+            return cliente_demo(q)
         from app.ficha import montar as montar_ficha
         from app.mascarar import sanitizar
 
@@ -353,6 +405,10 @@ def criar_app(cfg=None) -> FastAPI:
             return JSONResponse({"ok": False}, status_code=401)
         if os.environ.get("PAINEL_SEM_ACAO") == "1":
             return JSONResponse({"ok": False, "mensagem": "sem dado — esta cópia só lê métricas"}, status_code=403)
+        if _demo():
+            from app.demo_dados import acao as acao_demo
+
+            return acao_demo(corpo.model_dump())
         from app.mascarar import sanitizar
         from app.operar import executar
 

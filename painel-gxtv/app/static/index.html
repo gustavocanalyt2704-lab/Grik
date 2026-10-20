@@ -7,6 +7,7 @@
 <title>Painel GXTV</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect rx='8' width='32' height='32' fill='%2322d3ee'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='13' font-family='sans-serif' font-weight='700' fill='%2304141c'%3EGX%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/static/app.css?v=dark1">
+<link rel="stylesheet" href="/static/tema.css?v=gx2">
 </head>
 <body class="booting">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -53,6 +54,7 @@
 <div id="app" hidden>
   <header class="topbar">
     <div class="local-banner" id="localBanner" hidden>Pré-visualização neste computador. Na VPS os números vêm dos dados reais.</div>
+    <div class="demo-banner" id="demoBanner" hidden>Demonstração. Estes números são um exemplo para ver o painel. Na VPS entram os dados de verdade.</div>
     <div class="stale-banner" id="staleBanner"><svg class="i"><use href="#i-alert"/></svg><span>Sem conexão com o servidor. Mostrando os últimos dados recebidos.</span></div>
     <div class="top-row">
       <div class="brand"><div class="brand-logo">GX</div><div>GXTV<small>Painel ao vivo</small></div></div>
@@ -65,6 +67,7 @@
         <button class="chip" type="button" data-vista="saude">Saúde</button>
         <button class="chip" type="button" data-vista="ranking-apps">Apps</button>
         <button class="chip" type="button" data-vista="ativos">Ativos reais</button>
+        <button class="chip" type="button" data-vista="acoes">Ações</button>
       </nav>
       <div class="spacer"></div>
       <div class="live" id="live"><span class="dot"></span><span id="liveTxt">AO VIVO</span><span class="mini num" id="clock">--:--:--</span></div>
@@ -135,12 +138,25 @@
       </div>
       <!-- PAINEL_1110: visão geral (cards resumo + alertas) -->
       <div id="geral-corpo"></div>
+      <div id="gx-inicio" class="gx-grade"></div>
     </section>
 
-    <section id="vista-vendas" hidden><div id="vendas-corpo"><p class="p11-mudo">Carregando…</p></div></section>
-    <section id="vista-vendas-nr" hidden><!-- VENDAS_1110 --><div id="vendasnr-corpo"><p class="vd-nota">Carregando…</p></div></section>
-    <section id="vista-ativos" hidden><!-- ATIVOS_REAIS_1210 --><div id="ativos-corpo"><p class="ar-nota">Carregando…</p></div></section>
-    <section id="vista-saude" hidden><div id="saude-corpo"><p class="p11-mudo">Carregando…</p></div></section>
+    <section id="vista-vendas" hidden>
+      <div id="gx-funil" class="gx-grade"></div>
+      <div id="vendas-corpo"><p class="p11-mudo">Carregando…</p></div>
+    </section>
+    <section id="vista-vendas-nr" hidden><!-- VENDAS_1110 -->
+      <div id="gx-vendas" class="gx-grade"></div>
+      <div id="vendasnr-corpo"><p class="vd-nota">Carregando…</p></div>
+    </section>
+    <section id="vista-ativos" hidden><!-- ATIVOS_REAIS_1210 -->
+      <div id="gx-ativos" class="gx-grade"></div>
+      <div id="ativos-corpo"><p class="ar-nota">Carregando…</p></div>
+    </section>
+    <section id="vista-saude" hidden>
+      <div id="gx-saude" class="gx-grade"></div>
+      <div id="saude-corpo"><p class="p11-mudo">Carregando…</p></div>
+    </section>
 
     <div class="p11-subnav" id="p11Subnav" hidden>
       <div class="p11-seg"><button type="button" data-msg="vivo" class="on">Agora</button><button type="button" data-msg="semana">Semana</button></div>
@@ -149,6 +165,7 @@
     <section id="atendidos-hoje" hidden><!-- ATENDIDOS_1410 --></section>
 
     <section id="vista-vivo" hidden>
+      <div id="gx-msg" class="gx-grade"></div>
       <div id="vivo-corpo"><p class="frase">Carregando o ao vivo…</p></div>
       <!-- INICIO_0810 (movido pra Mensagens em PAINEL_1110): quem atendeu por número -->
       <div id="inicioExtra" class="ix"></div>
@@ -219,10 +236,13 @@
           </label>
         </div>
         <div class="acoes-botoes">
+          <p class="acoes-grupo">Teste</p>
           <button type="button" data-acao="teste">Criar teste de 2 horas</button>
+          <p class="acoes-grupo">Renovar</p>
           <button type="button" data-acao="renovar" data-dias="30">Renovar 30 dias</button>
           <button type="button" data-acao="renovar" data-dias="60">Renovar 60 dias</button>
           <button type="button" data-acao="renovar" data-dias="90">Renovar 90 dias</button>
+          <p class="acoes-grupo">Telas e robô</p>
           <button type="button" data-acao="telas" id="acaoTelas">Liberar 4 telas</button>
           <button type="button" data-acao="pausar">Pausar o robô só para este cliente</button>
           <button type="button" data-acao="soltar">Soltar o robô para este cliente</button>
@@ -255,7 +275,7 @@
 <script src="/static/lote_atencao.js"></script>
 <script src="/static/ranking_apps.js?v=apps1910"></script>
 <script src="/static/vivo.js"></script>
-<script src="/static/inicio_0810.js"></script>
+<script src="/static/inicio_0810.js?v=gx3"></script>
 <link rel="stylesheet" href="/static/semana.css?v=dark1">
 <link rel="stylesheet" href="/static/vendas.css?v=1110">
 <script src="/static/vendas.js?v=1410b"></script>
@@ -264,11 +284,12 @@
 <script src="/static/atendidos.js?v=1410"></script>
 <script src="/static/por_conta.js?v=1810"></script>
 <link rel="stylesheet" href="/static/painel_1110.css?v=dark1">
-<script src="/static/painel_1110.js?v=1110p"></script>
+<script src="/static/painel_1110.js?v=gx3"></script>
 <link rel="stylesheet" href="/static/ativos.css?v=v2_1910">
 <script src="/static/ativos.js?v=v2_1910"></script>
 <script src="/static/app.js?v=1110p"></script>
 <script src="/static/acoes.js"></script>
+<script src="/static/graficos.js?v=gx2"></script>
 <div id="p11Toasts"></div>
 </body>
 </html>

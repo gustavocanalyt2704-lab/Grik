@@ -26,7 +26,7 @@ fi
 import json, pathlib, re, ssl, sys, urllib.request
 
 base = sys.argv[1]
-senha = REDACTED"/root/painel-gxtv-senha.txt").read_text(encoding="utf-8").strip()
+senha = pathlib.Path("/root/painel-gxtv-senha.txt").read_text(encoding="utf-8").strip()
 ctx = ssl._create_unverified_context()
 jar = {}
 

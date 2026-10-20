@@ -50,7 +50,25 @@ export function RegistryPage() {
           </button>
         ))}
       </div>
-      <div className="overflow-x-auto rounded-md border border-[var(--color-line)]">
+      <div className="grid gap-3 md:hidden">
+        {metrics.map((m) => (
+          <article key={m.id} className="rounded-2xl border border-[var(--color-line)] bg-white p-3">
+            <p className="font-mono text-[11px] text-[var(--color-accent)]">{m.id}</p>
+            <h3 className="mt-1 text-base font-semibold text-[var(--color-ink)]">{m.name}</h3>
+            <p className="mt-1 text-sm leading-snug text-[var(--color-mist)]">{m.definition}</p>
+            <p className="mt-2 text-xs text-[var(--color-ink-soft)]">Fonte: {m.source}</p>
+            <p className="mt-1 font-mono text-[11px] text-[var(--color-mist)]">{m.formula}</p>
+            <button
+              type="button"
+              onClick={() => openDrill(m.id)}
+              className="mt-3 min-h-11 rounded-xl border border-[var(--color-line)] px-3 text-sm"
+            >
+              Ver de onde vem
+            </button>
+          </article>
+        ))}
+      </div>
+      <div className="hidden overflow-x-auto rounded-md border border-[var(--color-line)] md:block">
         <table className="w-full min-w-[900px] border-collapse text-left text-sm">
           <thead className="bg-[var(--color-panel)] text-[11px] uppercase tracking-wide text-[var(--color-mist)]">
             <tr>

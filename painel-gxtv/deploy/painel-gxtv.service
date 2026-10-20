@@ -15,7 +15,7 @@ Environment=PAINEL_TLS=1
 Environment=PAINEL_PORT=8741
 Environment=PAINEL_AUTH_FILE=/var/lib/painel-gxtv/auth.json
 Environment=PAINEL_CERT=/var/lib/painel-gxtv/cert.pem
-Environment=PAINEL_CERT_KEY=REDACTED
+Environment=PAINEL_CERT_KEY=/var/lib/painel-gxtv/key.pem
 ExecStart=/opt/painel-gxtv/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8741 --ssl-certfile /var/lib/painel-gxtv/cert.pem --ssl-keyfile /var/lib/painel-gxtv/key.pem
 Restart=on-failure
 RestartSec=3
