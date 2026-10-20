@@ -1,0 +1,13 @@
+{
+  "testes": {
+    "Brasil IPTV": {"id": "kg5164DjlQ", "telas": 1},
+    "XCIPTV": {"id": "we6Wnw1K8N", "telas": 4},
+    "MN TECH": {"id": "JOALy014wx", "telas": 1},
+    "Max Player": {"id": "kmVLl71QwB", "telas": 1}
+  },
+  "pagos": {
+    "30": {"com": "bOxLAQLZ7a", "sem": "qK4WrQDeNj", "dias": 30},
+    "60": {"com": "QywDmRWpRJ", "sem": "7loL7aMWXM", "dias": 61},
+    "90": {"com": "Yen129WPEa", "sem": "ZVdWXjL3qk", "dias": 92}
+  }
+}

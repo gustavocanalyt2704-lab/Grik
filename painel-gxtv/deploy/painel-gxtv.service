@@ -1,0 +1,27 @@
+[Unit]
+Description=Painel ao vivo GXTV
+After=network.target
+
+[Service]
+Type=simple
+User=mnrobo
+Group=mnrobo
+WorkingDirectory=/opt/painel-gxtv
+EnvironmentFile=-/etc/mnrobo.env
+EnvironmentFile=-/etc/mnrobo-box.env
+EnvironmentFile=-/etc/mnrobo-mp.env
+EnvironmentFile=/etc/mnrobo-espelho2.env
+Environment=PAINEL_TLS=1
+Environment=PAINEL_PORT=8741
+Environment=PAINEL_AUTH_FILE=/var/lib/painel-gxtv/auth.json
+Environment=PAINEL_CERT=/var/lib/painel-gxtv/cert.pem
+Environment=PAINEL_CERT_KEY=REDACTED
+ExecStart=/opt/painel-gxtv/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8741 --ssl-certfile /var/lib/painel-gxtv/cert.pem --ssl-keyfile /var/lib/painel-gxtv/key.pem
+Restart=on-failure
+RestartSec=3
+MemoryMax=280M
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,560;9..144,640&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-ink: #10211b;
+  --color-ink-soft: #24352f;
+  --color-panel: #ffffff;
+  --color-panel-2: #f4f1ea;
+  --color-line: #e4dfd4;
+  --color-mist: #6d675f;
+  --color-paper: #1c1917;
+  --color-accent: #0c6b58;
+  --color-accent-2: #9a3412;
+  --color-danger: #b42318;
+  --color-info: #0e7490;
+  --color-ok: #067647;
+  --color-stale: #b45309;
+  --color-empty: #78716c;
+  --color-on-accent: #f8faf8;
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-paper);
+  background:
+    linear-gradient(180deg, #f7f4ee 0%, #efeae2 100%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 28%, white);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.anim-rise {
+  animation: rise-in 0.45s ease-out both;
+}
+
+.anim-pulse {
+  animation: pulse-soft 1.4s ease-in-out infinite;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #efeae2 25%,
+    #e4dfd4 50%,
+    #efeae2 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 0.35rem;
+}
+
+.pb-nav {
+  padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .pb-nav {
+    padding-bottom: 2.5rem;
+  }
+}

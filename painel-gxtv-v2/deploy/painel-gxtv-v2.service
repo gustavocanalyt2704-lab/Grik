@@ -1,0 +1,20 @@
+[Unit]
+Description=Painel GXTV v2 (rota /v2 paralela)
+After=network.target
+# Não depende do painel v1 — sobe em paralelo
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/painel-gxtv-v2/backend
+EnvironmentFile=-/etc/painel-gxtv-v2.env
+Environment=PAINEL_V2_DIST=/opt/painel-gxtv-v2/frontend/dist
+Environment=PAINEL_V2_AUTH_FILE=/var/lib/painel-gxtv-v2/auth.json
+# TLS na 8742 reusa o certificado já existente. O login NÃO lê o auth.json do v1.
+ExecStart=/opt/painel-gxtv-v2/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8742 --ssl-certfile /var/lib/painel-gxtv/cert.pem --ssl-keyfile /var/lib/painel-gxtv/key.pem --workers 1
+Restart=on-failure
+RestartSec=3
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

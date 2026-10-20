@@ -1,0 +1,10 @@
+/* ATENDIDOS_1410 */
+#atendidos-hoje{display:flex;flex-direction:column;gap:10px;margin:8px 0 14px}
+.at-card{background:#0a0a0a;border:1px solid #222222;border-radius:14px;padding:10px 14px}
+.at-big{padding:16px 18px;border-color:#22d3ee55}
+.at-rot{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.at-num{font-size:44px;font-weight:900;color:var(--cyan,#22d3ee);line-height:1.1}
+.at-n{font-size:24px;font-weight:800}
+.at-sub{font-size:12px;color:var(--faint,#7a7a7a)}
+.at-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+#atendidos-hoje[hidden]{display:none!important} /* FIX1710: só na aba Mensagens */

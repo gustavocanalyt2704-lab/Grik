@@ -1,0 +1,13 @@
+# Cron F7 — relatório diário 23:55 America/Bahia
+# Instalar na VPS (coordenador):
+#   cp painel_gxtv_v2/deploy/cron-relatorio-diario.example /etc/cron.d/painel-gxtv-v2-relatorio
+#   # ou crontab -e com a linha abaixo
+#
+# Bahia = UTC-3 (sem DST) → 23:55 Bahia = 02:55 UTC do dia seguinte
+# Preferir TZ=America/Bahia no cron:
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+CRON_TZ=America/Bahia
+
+55 23 * * * root /opt/painel-gxtv-v2/venv/bin/python /opt/painel-gxtv-v2/backend/scripts/relatorio_diario_tg.py >> /var/log/painel-gxtv-v2-relatorio.log 2>&1

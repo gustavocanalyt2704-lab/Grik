@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Painel GXTV</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect rx='8' width='32' height='32' fill='%2322d3ee'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='13' font-family='sans-serif' font-weight='700' fill='%2304141c'%3EGX%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/app.css?v=dark1">
+</head>
+<body class="booting">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-3"/><path d="M21 9H7a2 2 0 0 0 0 4h14z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17.5v.01"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 14v.01M15 14v.01M2 13v3M22 13v3"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="13" rx="2"/><path d="M8 21h8M12 18v3"/></symbol>
+    <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 2h12M6 22h12M7 2c0 5 5 5 5 10s-5 5-5 10M17 2c0 5-5 5-5 10s5 5 5 10"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></symbol>
+    <symbol id="i-hdd" viewBox="0 0 24 24"><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M2 13l3-8h14l3 8M6 17v.01"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+    <symbol id="i-stick" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="14" rx="1.5"/><path d="M12 16v3a2 2 0 0 1-2 2H7"/></symbol>
+    <symbol id="i-money" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-funnel" viewBox="0 0 24 24"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></symbol>
+  </defs>
+</svg>
+
+<div id="login">
+  <form class="card login-card" id="formLogin">
+    <div class="brand"><div class="brand-logo">GX</div><div>Painel GXTV<small>MN Tech · acesso restrito</small></div></div>
+    <h1>Entrar</h1>
+    <div><label for="usuario">Usuário</label><input id="usuario" name="usuario" autocomplete="username" placeholder="gustavo" required></div>
+    <div><label for="senha">Senha</label><input id="senha" name="senha" type="password" autocomplete="current-password" placeholder="••••••••" required></div>
+    <div class="login-err" id="loginErr" role="alert"></div>
+    <button class="btn-primary" type="submit">Entrar no painel</button>
+    <div class="mini lockline"><svg class="i"><use href="#i-lock"/></svg> Conexão pela VPS</div>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <header class="topbar">
+    <div class="local-banner" id="localBanner" hidden>Pré-visualização neste computador. Na VPS os números vêm dos dados reais.</div>
+    <div class="stale-banner" id="staleBanner"><svg class="i"><use href="#i-alert"/></svg><span>Sem conexão com o servidor. Mostrando os últimos dados recebidos.</span></div>
+    <div class="top-row">
+      <div class="brand"><div class="brand-logo">GX</div><div>GXTV<small>Painel ao vivo</small></div></div>
+      <nav class="chips" aria-label="Telas">
+        <!-- PAINEL_1110: abas enxutas -->
+        <button class="chip on" type="button" data-vista="inicio">Visão geral</button>
+        <button class="chip" type="button" data-vista="vendas-nr">Vendas</button>
+        <button class="chip" type="button" data-vista="vendas">Funil</button>
+        <button class="chip" type="button" data-vista="mensagens">Mensagens</button>
+        <button class="chip" type="button" data-vista="saude">Saúde</button>
+        <button class="chip" type="button" data-vista="ranking-apps">Apps</button>
+        <button class="chip" type="button" data-vista="ativos">Ativos reais</button>
+      </nav>
+      <div class="spacer"></div>
+      <div class="live" id="live"><span class="dot"></span><span id="liveTxt">AO VIVO</span><span class="mini num" id="clock">--:--:--</span></div>
+      <div class="p11-sino-w"><button class="icon-btn" id="btnSino" type="button" aria-label="Alertas"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span id="p11Badge" hidden>0</span></button>
+        <div id="p11Sino" hidden><h4>Alertas das últimas 24 h</h4><div id="p11SinoLista"></div></div></div>
+      <button class="icon-btn" id="btnTv" type="button" aria-label="Modo TV"><svg class="i"><use href="#i-tv"/></svg></button>
+      <button class="icon-btn" id="btnSair" type="button" aria-label="Sair"><svg class="i"><use href="#i-lock"/></svg></button>
+    </div>
+  </header>
+
+  <main>
+    <section id="vista-inicio">
+      <!-- INICIO_LIMPO_0810: bloco antigo escondido (fica no HTML só pro app.js não quebrar) -->
+      <p class="frase velho-0810" id="frase" aria-live="polite" hidden>Carregando…</p>
+      <div class="miolo velho-0810" hidden>
+        <button class="card hero" type="button" data-abre="dinheiro" id="cardDinheiro">
+          <div class="ring" aria-hidden="true">
+            <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--surface-2)" stroke-width="12"/>
+              <circle id="ringArc" cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 999"/>
+              <defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
+            </svg>
+            <div class="pct"><div><span id="ringPct" class="num">—</span><small id="ringLbl">de ontem</small></div></div>
+          </div>
+          <div class="hero-txt">
+            <div class="mini kicker">Dinheiro de hoje</div>
+            <div class="big num" id="moneyBig">—</div>
+            <p class="hero-frase" id="moneyFrase"></p>
+          </div>
+          <div class="previsao" id="previsao">
+              <div class="prev-top"><span class="selo-est">estimativa</span><span id="prevFrase">—</span></div>
+              <div class="prev-barras" id="prevBarras" aria-hidden="true"></div>
+              <p class="mini" id="prevNota"></p>
+            </div>
+        </button>
+        <div class="pilha">
+          <button class="card kpi" type="button" data-abre="dinheiro" id="cardRenov"><span class="bolinha"><svg class="i"><use href="#i-check"/></svg></span><div class="kpi-txt"><div class="lbl">Renovações</div><div class="val num" id="renovVal">—</div><span class="delta" id="renovDelta"></span><p class="foot" id="renovFrase"></p></div></button>
+          <button class="card kpi" type="button" id="cardAtend"><span class="bolinha"><svg class="i"><use href="#i-users"/></svg></span><div class="kpi-txt"><div class="lbl">Atendidos hoje</div><div class="val num" id="atendVal">—</div><span class="delta" id="atendDelta"></span><div class="quem" id="atendQuem"></div></div></button>
+          <button class="card kpi" type="button" id="cardSemResp"><span class="bolinha"><svg class="i"><use href="#i-chat"/></svg></span><div class="kpi-txt"><div class="lbl">Sem resposta hoje</div><div class="val num" id="semRespVal">—</div><p class="foot" id="semRespFrase"></p></div></button>
+          <button class="card kpi" type="button" data-abre="vencem" id="cardVencem"><span class="bolinha"><svg class="i"><use href="#i-clock"/></svg></span><div class="kpi-txt"><div class="lbl">Vencem hoje</div><div class="val num" id="venceVal">—</div><div class="mini-barra" id="venceBarra"></div><p class="foot" id="venceFrase"></p></div></button>
+        </div>
+        <section id="por-conta" hidden><!-- POR_CONTA_1810 --></section>
+        <details class="resto card">
+          <summary>Ver o resto do dia</summary>
+          <div class="rodape-visual">
+            <div class="card calor-card">
+              <div class="card-head">
+                <h3 id="calorTitulo">Quando o movimento acontece</h3>
+                <div class="atalhos">
+                  <button type="button" data-abre="vendas">Vendas</button>
+                  <button type="button" data-abre="qualidade">Qualidade</button>
+                  <button type="button" data-abre="saude" id="atalhoPc">Computador</button>
+                </div>
+              </div>
+              <div class="calor" id="calor"></div>
+              <p class="mini" id="calorFrase"></p>
+            </div>
+            <div class="card linha-card">
+              <h3>Agora há pouco</h3>
+              <div class="linha" id="linha"></div>
+            </div>
+          </div>
+          <aside class="card rotinas" id="rotinas">
+            <h3><svg class="i"><use href="#i-clock"/></svg> Próximas rotinas</h3>
+            <div id="rotinaLista"></div>
+            <button class="link" type="button" id="verRotinas" hidden>Ver todas</button>
+          </aside>
+        </details>
+      </div>
+      <!-- PAINEL_1110: visão geral (cards resumo + alertas) -->
+      <div id="geral-corpo"></div>
+    </section>
+
+    <section id="vista-vendas" hidden><div id="vendas-corpo"><p class="p11-mudo">Carregando…</p></div></section>
+    <section id="vista-vendas-nr" hidden><!-- VENDAS_1110 --><div id="vendasnr-corpo"><p class="vd-nota">Carregando…</p></div></section>
+    <section id="vista-ativos" hidden><!-- ATIVOS_REAIS_1210 --><div id="ativos-corpo"><p class="ar-nota">Carregando…</p></div></section>
+    <section id="vista-saude" hidden><div id="saude-corpo"><p class="p11-mudo">Carregando…</p></div></section>
+
+    <div class="p11-subnav" id="p11Subnav" hidden>
+      <div class="p11-seg"><button type="button" data-msg="vivo" class="on">Agora</button><button type="button" data-msg="semana">Semana</button></div>
+    </div>
+
+    <section id="atendidos-hoje" hidden><!-- ATENDIDOS_1410 --></section>
+
+    <section id="vista-vivo" hidden>
+      <div id="vivo-corpo"><p class="frase">Carregando o ao vivo…</p></div>
+      <!-- INICIO_0810 (movido pra Mensagens em PAINEL_1110): quem atendeu por número -->
+      <div id="inicioExtra" class="ix"></div>
+    </section>
+
+    <section id="vista-metricas" hidden>
+      <div class="filtros" id="filtros">
+        <div class="seg" role="group" aria-label="Período">
+          <button type="button" data-periodo="hoje" class="on">Hoje</button>
+          <button type="button" data-periodo="ontem">Ontem</button>
+          <button type="button" data-periodo="7d">7 dias</button>
+        </div>
+        <label class="filtro"><svg class="i"><use href="#i-chat"/></svg><select id="fNumero" aria-label="Número"><option value="">Todos os números</option></select></label>
+        <label class="filtro"><svg class="i"><use href="#i-users"/></svg><select id="fAtendente" aria-label="Atendente"><option value="">Todos que atendem</option></select></label>
+        <label class="filtro"><svg class="i"><use href="#i-box"/></svg><select id="fApp" aria-label="Aplicativo"><option value="">Todos os apps</option></select></label>
+        <label class="filtro"><svg class="i"><use href="#i-tv"/></svg><select id="fAparelho" aria-label="Aparelho"><option value="">Todos os aparelhos</option></select></label>
+        <button type="button" class="limpar" id="fLimpar" hidden>Limpar filtros</button>
+      </div>
+      <p class="frase" id="fraseMet">Carregando as métricas…</p>
+      <div id="metCorpo" class="met-grade"></div>
+    </section>
+
+    <section id="vista-lote-atencao" hidden>
+      <div class="la-toolbar">
+        <label>Período
+          <select id="la-periodo" aria-label="Período do lote">
+            <option value="hoje">Hoje</option>
+            <option value="ontem">Ontem</option>
+            <option value="7d">7 dias</option>
+          </select>
+        </label>
+        <button type="button" class="btn-sec" id="la-atualizar">Atualizar</button>
+      </div>
+      <div id="lote-atencao-corpo"><p class="la-nota">Carregando lote de atenção…</p></div>
+    </section>
+
+    <section id="vista-ranking-apps" hidden>
+      <!-- RANKING_VISUAL_0810: aba refeita no padrão dos cards escuros -->
+      <div id="ranking-apps-corpo"><p class="rk-nota">Carregando ranking…</p></div>
+    </section>
+
+    <section id="vista-semana" hidden>
+      <!-- SEMANA_1110: mensagens por dia da semana, esta semana x passada -->
+      <div id="semana-corpo"><p class="sm-nota">Carregando…</p></div>
+    </section>
+
+    <section id="vista-chats" hidden>
+      <p class="frase" id="fraseChats"></p>
+      <div id="chatsCorpo"></div>
+    </section>
+
+    <section id="vista-acoes" hidden>
+      <p class="frase">Resolver um cliente sem pedir ajuda.</p>
+      <div class="acoes-caixa card">
+        <label for="acaoBusca">Telefone ou usuário</label>
+        <div class="acoes-busca">
+          <input id="acaoBusca" inputmode="text" autocomplete="off" placeholder="71999998888 ou usuário">
+          <button class="btn-primary" type="button" id="acaoBuscar">Buscar</button>
+        </div>
+        <p class="mini" id="acaoBuscaMsg"></p>
+        <div id="acaoFicha"></div>
+        <div class="acoes-opcoes">
+          <label>Painel
+            <select id="acaoPainel"></select>
+          </label>
+          <label>App do teste
+            <select id="acaoApp"></select>
+          </label>
+        </div>
+        <div class="acoes-botoes">
+          <button type="button" data-acao="teste">Criar teste de 2 horas</button>
+          <button type="button" data-acao="renovar" data-dias="30">Renovar 30 dias</button>
+          <button type="button" data-acao="renovar" data-dias="60">Renovar 60 dias</button>
+          <button type="button" data-acao="renovar" data-dias="90">Renovar 90 dias</button>
+          <button type="button" data-acao="telas" id="acaoTelas">Liberar 4 telas</button>
+          <button type="button" data-acao="pausar">Pausar o robô só para este cliente</button>
+          <button type="button" data-acao="soltar">Soltar o robô para este cliente</button>
+        </div>
+        <div class="confirma" id="confirma" hidden>
+          <p id="confirmaFrase"></p>
+          <div class="confirma-botoes">
+            <button type="button" class="btn-primary" id="confirmaSim">Sim, pode fazer</button>
+            <button type="button" class="btn-sec" id="confirmaNao">Cancelar</button>
+          </div>
+        </div>
+        <p class="acao-resultado" id="acaoResultado" hidden></p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="gaveta" hidden>
+  <div class="gaveta-fundo" id="gavetaFundo"></div>
+  <aside class="gaveta-painel" role="dialog" aria-modal="true" aria-labelledby="gavetaTitulo">
+    <header><h2 id="gavetaTitulo"></h2><button type="button" class="icon-btn" id="gavetaFecha" aria-label="Fechar">×</button></header>
+    <div id="gavetaCorpo"></div>
+  </aside>
+</div>
+<link rel="stylesheet" href="/static/lote_atencao.css?v=dark1">
+<link rel="stylesheet" href="/static/ranking_apps.css?v=apps1910">
+<link rel="stylesheet" href="/static/vivo.css?v=dark1">
+<link rel="stylesheet" href="/static/inicio_0810.css?v=dark1">
+<script src="/static/metricas.js"></script>
+<script src="/static/lote_atencao.js"></script>
+<script src="/static/ranking_apps.js?v=apps1910"></script>
+<script src="/static/vivo.js"></script>
+<script src="/static/inicio_0810.js"></script>
+<link rel="stylesheet" href="/static/semana.css?v=dark1">
+<link rel="stylesheet" href="/static/vendas.css?v=1110">
+<script src="/static/vendas.js?v=1410b"></script>
+<script src="/static/semana.js?v=dark1"></script>
+<link rel="stylesheet" href="/static/atendidos.css?v=dark1fx">
+<script src="/static/atendidos.js?v=1410"></script>
+<script src="/static/por_conta.js?v=1810"></script>
+<link rel="stylesheet" href="/static/painel_1110.css?v=dark1">
+<script src="/static/painel_1110.js?v=1110p"></script>
+<link rel="stylesheet" href="/static/ativos.css?v=v2_1910">
+<script src="/static/ativos.js?v=v2_1910"></script>
+<script src="/static/app.js?v=1110p"></script>
+<script src="/static/acoes.js"></script>
+<div id="p11Toasts"></div>
+</body>
+</html>
