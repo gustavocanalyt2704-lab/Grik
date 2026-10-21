@@ -369,7 +369,7 @@ def _gestor_bg():
         try:
             tel = _gestor_fila.pop()
         except KeyError:
-            time.sleep(0.5)
+            time.sleep(5)
             continue
         try:
             _gestor_achou(tel)
@@ -562,6 +562,32 @@ def _fiscal():
         pass
     hoje = agora.date().isoformat()
     parados = [p for p in _jl(ARQ_PARADO) if str(p.get("alerta_ts") or "").startswith(hoje)]
+    # PARADOS_2010: agrupa por cliente e tira quem ja foi renovado depois do comprovante
+    _cli = {}
+    for p in parados:
+        _t = "".join(ch for ch in str(p.get("telefone") or "") if ch.isdigit())[-8:]
+        _c = str(p.get("conversa") or "")
+        _ch = _t or _c
+        _q = str(p.get("quando") or p.get("alerta_ts") or "")
+        if _ch not in _cli or _q < _cli[_ch][2]:
+            _cli[_ch] = (_t, _c, _q)
+    _ren_t, _ren_c = {}, {}
+    for u in _jl(ARQ_USADOS):
+        if u.get("status") != "renovado":
+            continue
+        _ts = str(u.get("ts") or "")
+        _t = "".join(ch for ch in str(u.get("telefone") or "") if ch.isdigit())[-8:]
+        if _t:
+            _ren_t[_t] = max(_ren_t.get(_t, ""), _ts)
+        if u.get("conv"):
+            _ren_c[str(u["conv"])] = max(_ren_c.get(str(u["conv"]), ""), _ts)
+    def _menos30(q):  # tolerancia: o robo as vezes anota o comprovante minutos depois da renovacao
+        try:
+            return (datetime.fromisoformat(q[:19]) - timedelta(minutes=30)).isoformat()[:16]
+        except Exception:
+            return q[:16]
+    abertos = [k for k, (_t, _c, _q) in _cli.items()
+               if not ((_t and _ren_t.get(_t, "") >= _menos30(_q)) or (_c and _ren_c.get(_c, "") >= _menos30(_q)))]
     return {
         "fast_wh_mediana_s": oks[len(oks) // 2] if oks else None,
         "fast_wh_media_s": round(sum(oks) / len(oks)) if oks else None,
@@ -569,7 +595,7 @@ def _fiscal():
         "renov_mediana_min": round(esperas[len(esperas) // 2], 1) if esperas else None,
         "renov_n": len(esperas),
         "ciclo": ciclo, "fila_alerta": fila_alerta,
-        "manual_hoje": manual, "parados_hoje": len(parados),
+        "manual_hoje": manual, "parados_hoje": len(abertos), "abertos_agora": len(abertos), "alertas_hoje": len(parados), "clientes_alerta_hoje": len(_cli),
     }
 
 

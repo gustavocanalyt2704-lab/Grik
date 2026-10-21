@@ -104,7 +104,7 @@
         kpi("Vendido hoje", brl0(r.reais), `${int(r.n)} pagamentos · ontem ${brl0(o.reais)} ${delta(r.reais, o.reais, true)}`, "", "vendas") +
         kpi("Vendas novas", int(r.novas), `${brl0(r.novas_reais)} ${delta(r.novas, o.novas, false)}`, "", "novas") +
         kpi("Leads → pagaram", `${int(f.leads)} → ${int(f.pagou)}`, `${int(f.teste)} ganharam teste · conversão ${pct(f.pagou, f.leads)}`) +
-        kpi("Comprovante parado", int(fi.parados_hoje), `alertas do vigia hoje · ${int(fi.manual_hoje)} foram pro manual`, fi.parados_hoje ? "atencao" : "") +
+        kpi("Comprovante parado", int(fi.parados_hoje), `abertos agora · ${int(fi.alertas_hoje)} alertas hoje (${int(fi.clientes_alerta_hoje)} clientes) · ${int(fi.manual_hoje)} foram pro manual`, fi.parados_hoje ? "atencao" : "") +
         kpi("Robô e fiscal", caidos.length ? `${caidos.length} fora` : "tudo de pé", caidos.length ? e(caidos.map((x) => x.rotulo).join(", ")) : `fiscal responde em ~${fi.fast_wh_mediana_s == null ? "—" : fi.fast_wh_mediana_s + " s"}`, caidos.length ? "ruim" : "bom") +
         kpi("IA hoje", usd(s.ia && s.ia.hoje_usd), s.ia && s.ia.saldo ? `saldo ${usd(s.ia.saldo.restante_usd)}` : `média 7 dias ${usd(s.ia && s.ia.media_7d_usd)}`);
     } catch (x) { /* mantém o que tinha */ }
@@ -182,7 +182,7 @@
         ${kpi("Gasto de IA hoje", usd(ia.hoje_usd), `${int(ia.hoje_chamadas)} chamadas · ontem ${usd(ia.ontem_usd)} · média 7d ${usd(ia.media_7d_usd)}`)}
         ${kpi("Fiscal responde em", fi.fast_wh_mediana_s == null ? "—" : fi.fast_wh_mediana_s + " s", `mediana, últimas 2 h (média ${fi.fast_wh_media_s == null ? "—" : fi.fast_wh_media_s + " s"}) · ${int(fi.fast_wh_ok)} ok, ${int(fi.fast_wh_falhou)} falharam`, fi.fast_wh_falhou > fi.fast_wh_ok * 0.3 ? "atencao" : "")}
         ${kpi("Comprovante → renovado", fi.renov_mediana_min == null ? "—" : String(fi.renov_mediana_min).replace(".", ",") + " min", `mediana hoje, ${int(fi.renov_n)} renovações`)}
-        ${kpi("Fila de comprovante", `${int(fi.parados_hoje)} parados`, `alertas do vigia hoje · ${int(fi.manual_hoje)} no manual · ciclo do fiscal ${fi.ciclo ? fi.ciclo.seg + " s às " + e(fi.ciclo.hora) : "—"}`, fi.parados_hoje ? "atencao" : "")}
+        ${kpi("Fila de comprovante", `${int(fi.parados_hoje)} abertos agora`, `${int(fi.alertas_hoje)} alertas hoje · ${int(fi.manual_hoje)} no manual · ciclo do fiscal ${fi.ciclo ? fi.ciclo.seg + " s às " + e(fi.ciclo.hora) : "—"}`, fi.parados_hoje ? "atencao" : "")}
         ${kpi("Fila do robô", rb.pendentes == null ? "—" : int(rb.pendentes) + " pendentes", rb.hora ? `às ${e(rb.hora)} · fila ${int(rb.fila)} · ocupadas ${int(rb.ocupadas)} · aguardando ${int(rb.aguardando)}` : "")}
       </div>
       ${fi.fila_alerta ? `<p class="p11-aviso">Fiscal avisou ciclo lento: ${e(fi.fila_alerta)}</p>` : ""}
