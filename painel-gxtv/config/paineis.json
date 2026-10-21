@@ -1,0 +1,24 @@
+{
+  "principal": {
+    "nome": "Painel principal",
+    "token_env": "SIGMA_API_TOKEN",
+    "base_env": "SIGMA_BASE",
+    "base_padrao": "https://gerenciamento.sigmab.pro/api/integration/v1",
+    "user_env": "SIGMA_USER_ID",
+    "server_env": "SIGMA_SERVER_ID",
+    "user_padrao": "BV4D3rLaqZ",
+    "server_padrao": "BV4D3rLaqZ",
+    "telas_pagas": 4
+  },
+  "promo": {
+    "nome": "Promo 3 telas",
+    "token_env": "SIGMA_PROMO_TOKEN",
+    "base_env": "SIGMA_PROMO_BASE",
+    "base_padrao": "",
+    "user_env": "SIGMA_PROMO_USER_ID",
+    "server_env": "SIGMA_PROMO_SERVER_ID",
+    "user_padrao": "",
+    "server_padrao": "",
+    "telas_pagas": 3
+  }
+}

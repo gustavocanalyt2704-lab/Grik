@@ -1,0 +1,1 @@
+"""Painel GXTV v2 — API paralela em /v2."""

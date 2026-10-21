@@ -1,0 +1,51 @@
+/* INICIO_0810 — financeiro + por número (estilo dashboard preto) */
+.ix{display:flex;flex-direction:column;gap:18px;margin-top:18px}
+.ix-bloco{display:flex;flex-direction:column;gap:12px}
+.ix-tit{font-size:17px;font-weight:800}
+.ix-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.ix-kpi,.ix-card,.ix-num{background:#0a0a0a;border:1px solid #222222;border-radius:14px;padding:14px 16px}
+.ix-rot{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.ix-big{font-size:32px;font-weight:800;color:#fff;margin:6px 0 2px;line-height:1.1}
+.ix-sub,.ix-nota{font-size:11.5px;color:var(--faint)}
+.ix-duas{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:12px}
+@media (max-width:900px){.ix-duas{grid-template-columns:1fr}}
+.ix-card h3{font-size:14px;font-weight:700;margin-bottom:10px}
+.ix-h3b{margin-top:14px}
+.ix-hb{display:grid;grid-template-columns:92px 1fr 44px 104px;align-items:center;gap:10px;padding:5px 0;font-size:13px}
+.ix-hb.zero{opacity:.45}
+.ix-hb-nome{font-weight:700}
+.ix-hb-trilho{height:10px;background:#181818;border-radius:6px;overflow:hidden}
+.ix-hb-trilho i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:6px}
+.ix-hb.outros .ix-hb-trilho i{background:var(--violet)}
+.ix-hb-n{color:var(--muted);text-align:right}
+.ix-hb b{text-align:right;color:#fff}
+.ix-horas{display:flex;align-items:flex-end;gap:3px;height:72px}
+.ix-horas i{flex:1;background:var(--cyan);border-radius:2px 2px 0 0;opacity:.85}
+.ix-horas i.agora{background:var(--green)}
+.ix-horas i.futuro{opacity:.15}
+.ix-eixo{display:flex;justify-content:space-between;font-size:10.5px;color:var(--faint);margin-top:4px}
+.ix-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ix-quem{font-size:12px;padding:3px 9px;border-radius:999px;background:#0e0e0e;border:1px solid #272727;color:var(--text)}
+.ix-quem b{color:var(--cyan);margin-left:2px}
+.ix-quem.robo b{color:var(--green)}
+.ix-mudo{font-size:12px;color:var(--faint)}
+.ix-ult{display:grid;grid-template-columns:50px 1fr auto;gap:8px;font-size:12.5px;padding:3px 0;border-bottom:1px solid #0e0e0e;color:var(--muted)}
+.ix-ult b{color:#fff}
+.ix-nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.ix-num{display:flex;flex-direction:column;gap:9px}
+.ix-num header{display:flex;align-items:center;gap:8px;font-size:15px}
+.ix-num header b{flex:1}
+.ix-alerta{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:999px;color:var(--amber);background:rgba(251,191,36,.12)}
+.ix-num-grade{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+.ix-num-grade small{display:block;font-size:10.5px;color:var(--faint);text-transform:uppercase}
+.ix-num-grade b{font-size:19px;font-weight:800;color:#fff}
+.ix-barra{height:6px;background:#181818;border-radius:4px;overflow:hidden}
+.ix-barra i{display:block;height:100%;background:var(--green)}
+.ix-quem-tit{font-size:10.5px;color:var(--faint);text-transform:uppercase}
+.vv-quem{display:flex;flex-wrap:wrap;gap:4px;font-size:11px}
+.vv-quem .ix-quem{font-size:11px;padding:2px 7px}
+.ix-num-grade b.ix-pq{font-size:15px;white-space:nowrap}
+
+/* INICIO_LIMPO_0810: some o bloco antigo do Início */
+#vista-inicio > .velho-0810{display:none!important}
+#vista-inicio > .ix{margin-top:6px}

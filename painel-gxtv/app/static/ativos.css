@@ -1,0 +1,20 @@
+/* ATIVOS_REAIS_1210 */
+#ativos-corpo{padding:4px 0}
+.ar-topo{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:12px}
+.ar-topo h2{margin:0;font-size:1.15rem}
+.ar-nota{opacity:.65;font-size:.85rem}
+.ar-grande{border:1px solid rgba(127,127,127,.3);border-left:5px solid #22d3ee;border-radius:14px;padding:18px 22px;display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.ar-grande b{font-size:3.2rem;line-height:1.05}
+.ar-grande small,.ar-card small{opacity:.7;text-transform:uppercase;font-size:.75rem;letter-spacing:.05em}
+.ar-grande span,.ar-card span{opacity:.6;font-size:.82rem}
+.ar-grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:12px}
+.ar-card{border:1px solid rgba(127,127,127,.3);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.ar-card b{font-size:1.9rem;line-height:1.1}
+.ar-velho{opacity:.55}
+/* V2_1910 */
+.ar-dupla{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch}
+.ar-dupla .ar-grande{flex:2 1 320px}
+.ar-dupla .ar-sec{flex:1 1 220px;opacity:.75;filter:grayscale(1)}
+.ar-dupla .ar-sec b{font-size:2rem;color:#9aa0a6}
+.ar-cinza{color:#9aa0a6;font-size:.85em}
+.ar-sub{margin:18px 0 6px;font-size:1rem;color:#9aa0a6}

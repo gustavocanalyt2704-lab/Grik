@@ -1,0 +1,18 @@
+{
+  "versao": 1,
+  "atualizado": "2026-10-06",
+  "nota": "Instância sem nome no DataCrazy → rótulo do painel. Chaves: telefone (só dígitos, com ou sem 55), id da instância no webhook, evento magro (msg_p6cob) ou nome bruto. Várias chaves da mesma entrada somam na MESMA linha.",
+  "entradas": [
+    {
+      "rotulo": "COBRANÇA P6",
+      "grupo": "cobranca",
+      "painel": "P6",
+      "papel": "cobranca",
+      "telefones": ["5511936235903", "11936235903"],
+      "ids": [],
+      "eventos": ["msg_p6cob"],
+      "nomes_brutos": [],
+      "nota": "WhatsApp 11 93623-5903. Sem nome no DataCrazy (Gustavo 11:02). Não confundir com SUPORTE P6 5511936236522. Somar na mesma linha COBRANÇA P6, grupo Cobrança."
+    }
+  ]
+}

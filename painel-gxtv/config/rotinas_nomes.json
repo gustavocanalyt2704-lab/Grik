@@ -1,0 +1,65 @@
+{
+  "unidades": {
+    "dpkg-db-backup.timer": "Cópia dos pacotes do sistema",
+    "apt-daily.timer": "Atualização do sistema",
+    "apt-daily-upgrade.timer": "Atualização do sistema",
+    "logrotate.timer": "Organização dos registros",
+    "fstrim.timer": "Limpeza do disco",
+    "man-db.timer": "Atualização dos manuais",
+    "motd-news.timer": "Avisos do sistema",
+    "systemd-tmpfiles-clean.timer": "Limpeza de arquivos temporários",
+    "mnrobo-backup.timer": "Backup da noite",
+    "backup.timer": "Backup da noite",
+    "mnrobo-vigia.timer": "Vigia do servidor",
+    "mnrobo-contador.timer": "Resumo do Telegram",
+    "mnrobo-espelho.timer": "Cópia das conversas",
+    "mnrobo-hist-pausa.timer": "Pausa a cópia do histórico (de dia)",
+    "mnrobo-hist-volta.timer": "Religa a cópia do histórico (de noite)"
+  },
+  "cron": [
+    {
+      "contem": "rotinas feedback",
+      "nome": "Pergunta de satisfação"
+    },
+    {
+      "contem": "rotinas manha",
+      "nome": "Resumo da manhã"
+    },
+    {
+      "contem": "rotinas fechamento",
+      "nome": "Fechamento do dia"
+    },
+    {
+      "contem": "contador",
+      "nome": "Resumo do Telegram"
+    },
+    {
+      "contem": "mp_alerta",
+      "nome": "Aviso do Mercado Pago"
+    },
+    {
+      "contem": "vencimento",
+      "nome": "Aviso de vencimento"
+    },
+    {
+      "contem": "feedback",
+      "nome": "Pergunta de satisfação"
+    },
+    {
+      "contem": "backup",
+      "nome": "Backup da noite"
+    },
+    {
+      "contem": "vigia",
+      "nome": "Vigia do servidor"
+    },
+    {
+      "contem": "treino",
+      "nome": "Treino do robô"
+    },
+    {
+      "contem": "teste",
+      "nome": "Acompanhamento de teste"
+    }
+  ]
+}
